@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:  
+  php-apache:    
+    ports:      
+     - "8888:80"   
+    build: './build/php'  
+    volumes:      
+     - ./www:/var/www/html  
+
+  mysql:    
+    ports:   
+     - "3306:3306"   
+    build: './build/mysql'   
+    environment:      
+     MYSQL_ROOT_PASSWORD: thoms
+     MYSQL_DATABASE: thoms
+     MYSQL_USER: thoms
+     MYSQL_PASSWORD: password   
+    volumes:    
+     #- ./dbData:/var/lib/mysqlvolumes
+     - ./db:/var/lib/mysql
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_USER: thoms
+      PMA_PASSWORD: password
+    ports:
+     - 8080:80
+
+
