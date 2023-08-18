@@ -1,0 +1,33 @@
+# Home Page
+
+/:
+  controller: Home
+  action: index
+
+/home:
+  controller: Home
+  action: index
+
+# Register
+
+/register:
+  controller: Register
+  action: index
+
+/register/submit:
+  controller: Register
+  action: register
+
+# Login
+
+/login:
+  controller: Login
+  action: index
+
+/login/submit:
+  controller: Login
+  action: login
+
+/users:
+  controller: Users
+  action: index

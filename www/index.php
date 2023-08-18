@@ -1,42 +1,30 @@
 <?php
-//On génrère une constante qui contiendra le chemin vers index.php
-define('ROOT', str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']));
-die(ROOT);
 
-$params = explode('/', $_GET['p']);
+require_once 'Autoloader.php';
 
-if($params[0] != ""){
-    $controller = ucfirst($params[0]);
-    echo $controller;
-    $action = isset($params[1]) ? $params[1] : 'index';
-    
-    require_once(ROOT.'/controllers/'.$controller.'.php');
+use App\Autoloader;
+use App\Controllers\HomeController;
+use App\Controllers\RegisterController;
+use App\Controllers\LoginController;
 
-}else{
+Autoloader::register();
 
+$action = $_SERVER['REQUEST_URI'];
+
+$routes = [
+    '/' => ['controller' => HomeController::class, 'action' => 'index'],
+    '/home' => ['controller' => HomeController::class, 'action' => 'index'],
+    '/register' => ['controller' => RegisterController::class, 'action' => 'index'],
+    '/register/submit' => ['controller' => RegisterController::class, 'action' => 'register'],
+    '/login' => ['controller' => LoginController::class, 'action' => 'index'],
+    '/login/submit' => ['controller' => LoginController::class, 'action' => 'login'],
+];
+
+if (isset($routes[$action])) {
+    $route = $routes[$action];
+    $controller = new $route['controller'];
+    $action = $route['action'];
+    $controller->$action();
+} else {
+    echo 'Page not found';
 }
-
-//var_dump($params);
-
-//echo phpinfo();
-
-echo '<br>Bienvenue sur la page d\'accueil !<br>';
-$pdo = new PDO('mysql:host=mysql;dbname=thoms', 'thoms', 'password');
-
-// try {
-//         $pdo = new PDO('mysql:host=mysql;dbname=thoms', 'thoms', 'password');
-//     } catch (PDOException $e) {
-//         echo 'Erreur : ' . $e->getMessage() . '<br />';
-//         echo 'N° : ' . $e->getCode();
-//         die('Could not connect to MySQL');
-//     }
-
-$userStatement = $pdo->prepare("SELECT * FROM user");
-$userStatement->execute();
-$users = $userStatement->fetchAll();
-
-foreach ($users as $user) {
-    echo $user['name'] . '<br>';
-}
-
-?>
