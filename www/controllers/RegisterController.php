@@ -24,12 +24,14 @@ class RegisterController
             $username = $_POST['username'];
             $email = $_POST['email'];
             $password = $_POST['password'];
+            $creation_date = date('Y-m-d');
 
             // Créer un nouvel utilisateur
             $user = new User();
             $user->setUsername($username);
             $user->setEmail($email);
             $user->setPassword($password);
+            $user->setCreationDate($creation_date);
 
             // Enregistrer l'utilisateur dans la base de données
             $user->save();

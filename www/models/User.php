@@ -10,6 +10,7 @@ class User
     private $username;
     private $email;
     private $password;
+    private $creation_date;
     private static $pdo;
 
     public function __construct()
@@ -36,6 +37,11 @@ class User
         $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
+    public function setCreationDate($creation_date)
+    {
+        $this->creation_date = $creation_date;
+    }
+
     public function save()
     {
         // Vérifier que l'utilisateur n'existe pas déjà dans la base de données
@@ -44,13 +50,14 @@ class User
         }
 
         // Préparation de la requête SQL avec des paramètres nommés
-        $query = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
+        $query = "INSERT INTO users (username, email, password, creation_date) VALUES (:username, :email, :password, :creation_date)";
         $statement = self::$pdo->prepare($query);
 
         // Liaison des valeurs avec les paramètres
         $statement->bindValue(':username', $this->username);
         $statement->bindValue(':email', $this->email);
         $statement->bindValue(':password', $this->password);
+        $statement->bindValue(':creation_date', $this->creation_date);
 
         // Exécution de la requête préparée
         if (!$statement->execute()) {
