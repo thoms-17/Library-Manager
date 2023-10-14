@@ -28,6 +28,14 @@
   controller: Login
   action: login
 
-/users:
-  controller: Users
+# Logout
+
+/logout:
+  controller: LogoutController
+  action: index
+
+# User 
+
+/account:
+  controller: UserAccountController
   action: index

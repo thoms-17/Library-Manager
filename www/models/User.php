@@ -84,7 +84,7 @@ class User
     }
 
     public function authenticate($username, $password)
-    {        
+    {
         // Requête pour récupérer les informations de l'utilisateur correspondant au nom d'utilisateur fourni.
         $query = "SELECT * FROM users WHERE username = :username";
         $statement = self::$pdo->prepare($query);
@@ -102,7 +102,7 @@ class User
     }
 
     public function getUserIdByUsername($username)
-    {        
+    {
         // Requête pour récupérer l'ID de l'utilisateur correspondant au nom d'utilisateur fourni.
         $query = "SELECT id FROM users WHERE username = :username";
         $statement = self::$pdo->prepare($query);
@@ -116,5 +116,21 @@ class User
         }
 
         return null; // Aucun utilisateur trouvé
+    }
+
+    public function getUserDataById($userId)
+    {
+        // Écrivez la requête SQL pour obtenir les données de l'utilisateur
+        $query = "SELECT * FROM users WHERE id = :id";
+        $statement = self::$pdo->prepare($query);
+        $statement->bindParam(':id', $userId, PDO::PARAM_INT);
+        $statement->execute();
+
+        // Vérifiez si l'utilisateur existe
+        if ($statement->rowCount() > 0) {
+            return $statement->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return null; // Aucun utilisateur trouvé
+        }
     }
 }

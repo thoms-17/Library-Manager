@@ -34,8 +34,6 @@ class LoginController
         // Vérifier l'authentification avec la méthode authenticate du modèle User
         if ($userModel->authenticate($username, $password)) {
             // Authentification réussie
-            // Commencer la session
-            session_start();
 
             // Stocker l'ID de l'utilisateur dans la session
             $_SESSION['user_id'] = $userModel->getUserIdByUsername($username);

@@ -6,10 +6,9 @@ class Autoloader
 {
     static function register()
     {
-        spl_autoload_register([
-            __CLASS__,
-            'autoload'
-        ]);
+        spl_autoload_register([__CLASS__, 'autoload']);
+        // Démarrer la session
+        session_start();
     }
 
     static function autoload($class)

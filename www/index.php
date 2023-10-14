@@ -6,6 +6,8 @@ use App\Autoloader;
 use App\Controllers\HomeController;
 use App\Controllers\RegisterController;
 use App\Controllers\LoginController;
+use App\Controllers\LogoutController;
+use App\Controllers\AccountController;
 
 Autoloader::register();
 
@@ -18,6 +20,8 @@ $routes = [
     '/register/submit' => ['controller' => RegisterController::class, 'action' => 'register'],
     '/login' => ['controller' => LoginController::class, 'action' => 'index'],
     '/login/submit' => ['controller' => LoginController::class, 'action' => 'login'],
+    '/logout' => ['controller' => LogoutController::class, 'action' => 'index'],
+    '/account' => ['controller' => AccountController::class, 'action' => 'index'],
 ];
 
 if (isset($routes[$action])) {
