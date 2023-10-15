@@ -21,43 +21,43 @@ class RegisterController
     }
 
     public function register()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $creation_date = date('Y-m-d');
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = $_POST['username'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $creation_date = date('Y-m-d');
 
-        $user = new User();
-
-        $errorMessage = '';
-
-        if (!$this->isPasswordSecure($password)) {
-            $errorMessage = "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial.";
-        } elseif ($user->userExists($username, $email)) {
-            $errorMessage = "Ce nom d'utilisateur ou cette adresse e-mail est déjà utilisée.";
-        } else {
             $user = new User();
-            $user->setUsername($username);
-            $user->setEmail($email);
-            $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
-            $user->setCreationDate($creation_date);
 
-            try {
-                $user->save();
-                header('Location: /login');
-                exit;
-            } catch (\Exception $e) {
-                $errorMessage = "Une erreur s'est produite lors de l'enregistrement de l'utilisateur.";
+            $errorMessage = '';
+
+            if (!$this->isPasswordSecure($password)) {
+                $errorMessage = "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial.";
+                $_SESSION['register_error'] = $errorMessage;
+            } elseif ($user->userExists($username, $email)) {
+                $errorMessage = "Ce nom d'utilisateur ou cette adresse e-mail est déjà utilisée.";
+                $_SESSION['register_error'] = $errorMessage;
+            } else {
+                $user = new User();
+                $user->setUsername($username);
+                $user->setEmail($email);
+                $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+                $user->setCreationDate($creation_date);
+
+                try {
+                    $user->save();
+                    header('Location: /login');
+                    exit;
+                } catch (\Exception $e) {
+                    $errorMessage = "Une erreur s'est produite lors de l'enregistrement de l'utilisateur.";
+                }
             }
+            $_SESSION['register_error'] = $errorMessage;
+            header('Location: /register');
+            exit;
         }
-
-        $_SESSION['register_error'] = $errorMessage;
-        header('Location: /register');
-        exit;
     }
-}
-
 
     private function isPasswordSecure($password)
     {

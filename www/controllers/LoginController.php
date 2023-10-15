@@ -40,8 +40,7 @@ class LoginController
             exit;
         } else {
             // Authentification échouée
-            $errorMessage = "Nom d'utilisateur ou mot de passe incorrect.";
-            $_SESSION['login_error'] = $errorMessage;
+            $_SESSION['login_error'] = "Nom d'utilisateur ou mot de passe incorrect.";
             // Rediriger l'utilisateur vers la page de connexion avec un message d'erreur
             header('Location: /login');
             exit;
