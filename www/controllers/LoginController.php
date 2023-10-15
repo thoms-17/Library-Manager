@@ -40,10 +40,14 @@ class LoginController
             exit;
         } else {
             // Authentification échouée
-            $_SESSION['login_error'] = "Nom d'utilisateur ou mot de passe incorrect.";
+            $errorMessage = "Nom d'utilisateur ou mot de passe incorrect.";
+            $_SESSION['login_error'] = $errorMessage;
             // Rediriger l'utilisateur vers la page de connexion avec un message d'erreur
             header('Location: /login');
             exit;
         }
+        // Afficher la vue register.view.php avec le formulaire d'inscription
+        require_once 'views/layout.view.php';
+        require_once 'views/login.view.php';
     }
 }

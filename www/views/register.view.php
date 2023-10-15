@@ -27,9 +27,7 @@
             <button type="submit">S'inscrire</button>
         </div>
         <?php if (isset($errorMessage)) : ?>
-            <div class="error-message">
-                <?= $errorMessage ?>
-            </div>
+            <p class="error-message"><?= $errorMessage ?></p>
         <?php endif; ?>
     </form>
 </body>

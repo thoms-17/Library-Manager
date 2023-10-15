@@ -4,22 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Connexion</title>
+    <link rel="stylesheet" href="../styles/login.css">
 </head>
 
 <body>
     <h1>Connexion</h1>
-
-    <?php if (isset($_SESSION['login_error'])) : ?>
-        <div class="error-message">
-            <?php echo $_SESSION['login_error']; ?>
-        </div>
-        <?php unset($_SESSION['login_error']); ?>
-
-        <script>
-            console.log('Message d\'erreur :');
-            console.log('<?php echo $_SESSION['login_error']; ?>'); // Affiche dans la console du navigateur
-        </script>
-    <?php endif; ?>
 
     <form action="/login/submit" method="POST">
         <div>
@@ -33,6 +22,9 @@
         <div>
             <button type="submit">Se connecter</button>
         </div>
+        <?php if (isset($errorMessage)) : ?>
+            <p class="error-message"><?= $errorMessage ?></p>
+        <?php endif; ?>
     </form>
 </body>
 

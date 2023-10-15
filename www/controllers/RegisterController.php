@@ -6,45 +6,61 @@ use App\Models\User;
 
 class RegisterController
 {
-
-    private $content;
-
     public function index()
     {
+        $errorMessage = null;
+
+        if (isset($_SESSION['register_error'])) {
+            $errorMessage = $_SESSION['register_error'];
+            unset($_SESSION['register_error']); // Effacez le message d'erreur de la session après l'avoir affiché
+        }
+
+        // Afficher la vue register.view.php avec le formulaire d'inscription
         require_once 'views/layout.view.php';
         require_once 'views/register.view.php';
     }
 
     public function register()
-    {
-        // Vérifier si le formulaire a été soumis
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Récupérer les données du formulaire
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $creation_date = date('Y-m-d');
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $creation_date = date('Y-m-d');
 
-            // Créer un nouvel utilisateur
+        $user = new User();
+
+        $errorMessage = '';
+
+        if (!$this->isPasswordSecure($password)) {
+            $errorMessage = "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial.";
+        } elseif ($user->userExists($username, $email)) {
+            $errorMessage = "Ce nom d'utilisateur ou cette adresse e-mail est déjà utilisée.";
+        } else {
             $user = new User();
+            $user->setUsername($username);
+            $user->setEmail($email);
+            $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+            $user->setCreationDate($creation_date);
 
-            if ($user->userExists($username, $email)) {
-                $errorMessage = "Cette adresse e-mail est déjà utilisé.";
-            } else {
-                $user->setUsername($username);
-                $user->setEmail($email);
-                $user->setPassword($password);
-                $user->setCreationDate($creation_date);
-
-                // Enregistrer l'utilisateur dans la base de données
+            try {
                 $user->save();
-
-                // Redirection de l'utilisateur vers la page de connexion
                 header('Location: /login');
                 exit;
+            } catch (\Exception $e) {
+                $errorMessage = "Une erreur s'est produite lors de l'enregistrement de l'utilisateur.";
             }
         }
-        // Afficher la vue register.view.php avec le formulaire d'inscription
-        require_once 'views/register.view.php';
+
+        $_SESSION['register_error'] = $errorMessage;
+        header('Location: /register');
+        exit;
+    }
+}
+
+
+    private function isPasswordSecure($password)
+    {
+        return preg_match('/^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})/', $password);
     }
 }
