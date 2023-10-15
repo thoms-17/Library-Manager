@@ -65,7 +65,7 @@ class User
         }
     }
 
-    private function userExists($username, $email)
+    public function userExists($username, $email)
     {
         // Vérifier si l'utilisateur existe déjà dans la base de données
         $query = "SELECT COUNT(*) as count FROM users WHERE username = :username OR email = :email";

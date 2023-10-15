@@ -20,10 +20,6 @@
         </ul>
 
     </nav>
-
-    <div class="content">
-        <?php echo $content; ?>
-    </div>
 </body>
 
 </html>

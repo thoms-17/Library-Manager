@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Inscription</title>
     <link rel="stylesheet" href="../styles/register.css">
 </head>
+
 <body>
     <h1>Inscription</h1>
 
@@ -24,6 +26,12 @@
         <div>
             <button type="submit">S'inscrire</button>
         </div>
+        <?php if (isset($errorMessage)) : ?>
+            <div class="error-message">
+                <?= $errorMessage ?>
+            </div>
+        <?php endif; ?>
     </form>
 </body>
+
 </html>

@@ -15,11 +15,8 @@ class LoginController
             unset($_SESSION['login_error']); // Effacer le message d'erreur de la session après l'avoir affiché
         }
 
-        ob_start();
-        require_once 'views/login.view.php';
-        $content = ob_get_clean();
-
         require_once 'views/layout.view.php';
+        require_once 'views/login.view.php';
     }
 
     public function login()

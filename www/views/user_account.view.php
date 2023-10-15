@@ -9,6 +9,7 @@
     <?php if (isset($userData)) : ?>
         <p>Nom d'utilisateur : <?= $userData['username'] ?></p>
         <p>Adresse e-mail : <?= $userData['email'] ?></p>
+        <p>Date d'inscription : <?= date("d/m/Y", strtotime($userData['creation_date'])) ?></p>
         <!-- Ajoutez d'autres informations de l'utilisateur ici -->
     <?php else : ?>
         <p>Impossible de récupérer les informations de l'utilisateur.</p>

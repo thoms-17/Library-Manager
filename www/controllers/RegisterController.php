@@ -6,14 +6,13 @@ use App\Models\User;
 
 class RegisterController
 {
+
+    private $content;
+
     public function index()
     {
-        // Afficher la vue register.view.php avec le formulaire d'inscription
-        ob_start();
-        require_once 'views/register.view.php';
-        $content = ob_get_clean();
-
         require_once 'views/layout.view.php';
+        require_once 'views/register.view.php';
     }
 
     public function register()
@@ -28,20 +27,24 @@ class RegisterController
 
             // Créer un nouvel utilisateur
             $user = new User();
-            $user->setUsername($username);
-            $user->setEmail($email);
-            $user->setPassword($password);
-            $user->setCreationDate($creation_date);
 
-            // Enregistrer l'utilisateur dans la base de données
-            $user->save();
+            if ($user->userExists($username, $email)) {
+                $errorMessage = "Cette adresse e-mail est déjà utilisé.";
+            } else {
+                $user->setUsername($username);
+                $user->setEmail($email);
+                $user->setPassword($password);
+                $user->setCreationDate($creation_date);
 
-            // Redirection de l'utilisateur vers la page de connexion
-            header('Location: /login');
-            exit;
+                // Enregistrer l'utilisateur dans la base de données
+                $user->save();
+
+                // Redirection de l'utilisateur vers la page de connexion
+                header('Location: /login');
+                exit;
+            }
         }
-
         // Afficher la vue register.view.php avec le formulaire d'inscription
-        require 'views/register.view.php';
+        require_once 'views/register.view.php';
     }
 }
