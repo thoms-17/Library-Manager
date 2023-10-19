@@ -8,6 +8,13 @@ class LoginController
 {
     public function index()
     {
+        // Vérifiez si l'utilisateur est déjà connecté
+        if (isset($_SESSION['user_id'])) {
+            // Utilisateur déjà connecté, redirigez-le vers la page de compte
+            header('Location: /account');
+            exit;
+        }
+
         $errorMessage = null;
 
         if (isset($_SESSION['login_error'])) {
