@@ -54,22 +54,3 @@ form p {
   color: red;
   font-weight: bold;
 }
-
-/* Solution Responsive pour smartphone */
-
-@media screen and (max-width: 480px) {
-  form {
-    max-width: 300px;
-    padding: 10px;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    padding: 6px;
-  }
-
-  button[type="submit"] {
-    padding: 8px 16px;
-  }
-}
