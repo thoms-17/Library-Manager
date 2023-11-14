@@ -17,7 +17,7 @@ class AccountController
             // Chargez la vue Mon Compte avec les données de l'utilisateur
             require_once 'views/layout.view.php';
             require_once 'views/user_account.view.php';
-            
+
         } else {
             // L'utilisateur n'est pas connecté, redirigez-le vers la page de connexion
             header('Location: /login');
