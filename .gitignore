@@ -1,1 +1,4 @@
 /www/.env
+
+# Ignore files in the db directory
+db/*.sock
