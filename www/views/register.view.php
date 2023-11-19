@@ -10,6 +10,11 @@
 <body>
     <h1>Inscription</h1>
 
+    <?php if (isset($_SESSION['verification_message'])) : ?>
+        <p class="verification-message"><?= $_SESSION['verification_message'] ?></p>
+        <?php unset($_SESSION['verification_message']); ?>
+    <?php endif; ?>
+
     <form action="/register/submit" method="POST">
         <div>
             <label for="username">Nom d'utilisateur :</label>

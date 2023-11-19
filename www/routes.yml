@@ -39,3 +39,9 @@
 /account:
   controller: UserAccountController
   action: index
+
+# Vérification d'email
+
+/verify-email:
+  controller: EmailVerificationController
+  action: index
