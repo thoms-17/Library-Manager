@@ -53,7 +53,7 @@ class User
         }
 
         // Préparation de la requête SQL avec des paramètres nommés
-        $query = "INSERT INTO users (username, email, password, creation_date, verification_token, verification_token_expiration) VALUES (:username, :email, :password, :creation_date, :verification_token, :verification_token_expiration)";
+        $query = "INSERT INTO users (username, email, password, creation_date) VALUES (:username, :email, :password, :creation_date)";
         $statement = self::$pdo->prepare($query);
 
         // Liaison des valeurs avec les paramètres
