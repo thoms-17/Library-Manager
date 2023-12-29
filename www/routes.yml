@@ -45,3 +45,5 @@
 /verify-email:
   controller: EmailVerificationController
   action: index
+
+# Photo de profil

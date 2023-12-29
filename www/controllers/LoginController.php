@@ -38,9 +38,12 @@ class LoginController
         // Vérifier l'authentification avec la méthode authenticate du modèle User
         if ($userModel->authenticate($username, $password)) {
             // Authentification réussie
-
-            // Stocker l'ID de l'utilisateur dans la session
-            $_SESSION['user_id'] = $userModel->getUserIdByUsername($username);
+            $userData = $userModel->getUserDataByUsername($username);
+            $_SESSION['user_id'] = $userData['id'];
+            $_SESSION['role'] = $userData['role'];
+            $_SESSION['username'] = $userData['username'];
+            $_SESSION['email'] = $userData['email'];
+            $_SESSION['creation_date'] = $userData['creation_date'];
 
             // Rediriger l'utilisateur vers sa page de compte
             header('Location: /home');

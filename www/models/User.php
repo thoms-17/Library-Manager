@@ -14,6 +14,7 @@ class User
     private $email;
     private $password;
     private $creation_date;
+    private $profile_image;
     private static $pdo;
 
     public function __construct()
@@ -36,13 +37,17 @@ class User
 
     public function setPassword($password)
     {
-        // Hashage du mot de passe pour le sécuriser
         $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
     public function setCreationDate($creation_date)
     {
         $this->creation_date = $creation_date;
+    }
+
+    public function setProfileImage($profile_image)
+    {
+        $this->profile_image = $profile_image;
     }
 
     public function save()
@@ -53,7 +58,7 @@ class User
         }
 
         // Préparation de la requête SQL avec des paramètres nommés
-        $query = "INSERT INTO users (username, email, password, creation_date) VALUES (:username, :email, :password, :creation_date)";
+        $query = "INSERT INTO users (username, email, password, creation_date, profile_image) VALUES (:username, :email, :password, :creation_date, :profile_image)";
         $statement = self::$pdo->prepare($query);
 
         // Liaison des valeurs avec les paramètres
@@ -61,6 +66,7 @@ class User
         $statement->bindValue(':email', $this->email);
         $statement->bindValue(':password', $this->password);
         $statement->bindValue(':creation_date', $this->creation_date);
+        $statement->bindValue(':profile_image', $this->profile_image, PDO::PARAM_LOB);
 
         // Exécution de la requête préparée
         if (!$statement->execute()) {
@@ -78,7 +84,6 @@ class User
         $statement->bindValue(':username', $username);
         $statement->bindValue(':email', $email);
 
-        // Exécution de la requête préparée
         $statement->execute();
 
         $result = $statement->fetch(\PDO::FETCH_ASSOC);
@@ -104,36 +109,16 @@ class User
         return false; // Authentification échouée
     }
 
-    public function getUserIdByUsername($username)
+    public function getUserDataByUsername($username)
     {
-        // Requête pour récupérer l'ID de l'utilisateur correspondant au nom d'utilisateur fourni.
-        $query = "SELECT id FROM users WHERE username = :username";
+        // Requête pour récupérer l'ID et le rôle de l'utilisateur correspondant au nom d'utilisateur fourni.
+        $query = "SELECT * FROM users WHERE username = :username";
         $statement = self::$pdo->prepare($query);
         $statement->bindValue(':username', $username);
         $statement->execute();
 
-        $user = $statement->fetch(PDO::FETCH_ASSOC);
+        $userData = $statement->fetch(PDO::FETCH_ASSOC);
 
-        if ($user) {
-            return $user['id']; // Retourne l'ID de l'utilisateur
-        }
-
-        return null; // Aucun utilisateur trouvé
-    }
-
-    public function getUserDataById($userId)
-    {
-        // Écrivez la requête SQL pour obtenir les données de l'utilisateur
-        $query = "SELECT * FROM users WHERE id = :id";
-        $statement = self::$pdo->prepare($query);
-        $statement->bindParam(':id', $userId, PDO::PARAM_INT);
-        $statement->execute();
-
-        // Vérifiez si l'utilisateur existe
-        if ($statement->rowCount() > 0) {
-            return $statement->fetch(PDO::FETCH_ASSOC);
-        } else {
-            return null; // Aucun utilisateur trouvé
-        }
+        return $userData; // Retourne un tableau associatif contenant l'ID et le rôle de l'utilisateur
     }
 }

@@ -15,9 +15,16 @@
                 <i class="fas fa-user text-white"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
                 <?php if (isset($_SESSION['user_id'])) : ?>
-                    <a class="dropdown-item" href="/account">Mon Compte</a>
-                    <a class="dropdown-item" href="/logout">Déconnexion</a>
+                    <?php if ($_SESSION['role'] == 'admin') : ?>
+                        <a class="dropdown-item" href="/admin">Dashboard</a>
+                        <a class="dropdown-item" href="/account">Mon Compte</a>
+                        <a class="dropdown-item" href="/logout">Déconnexion</a>
+                    <?php else : ?>
+                        <a class="dropdown-item" href="/account">Mon Compte</a>
+                        <a class="dropdown-item" href="/logout">Déconnexion</a>
+                    <?php endif; ?>
                 <?php else : ?>
                     <a class="dropdown-item" href="/login">Connexion</a>
                     <a class="dropdown-item" href="/register">Inscription</a>
