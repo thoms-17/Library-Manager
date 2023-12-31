@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
-
 class AccountController
 {
     public function index()

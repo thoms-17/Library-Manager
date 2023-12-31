@@ -9,6 +9,7 @@ $routes = [
     '/login/submit' => ['controller' => 'LoginController', 'action' => 'login'],
     '/logout' => ['controller' => 'LogoutController', 'action' => 'index'],
     '/account' => ['controller' => 'AccountController', 'action' => 'index'],
+    '/admin/dashboard' => ['controller' => 'AdminDashboardController', 'action' => 'index'],
 ];
 
 function route($action)

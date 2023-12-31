@@ -16,6 +16,10 @@ class Autoloader
         // On récupère dans $class la totalité du namespace de la classe concernée
         $class = str_replace(__NAMESPACE__ . '\\', '', $class);
         $class = str_replace('\\', '/', $class);
-        require __DIR__ . '/' . $class . '.php';
+        $file = __DIR__ . '/' . $class . '.php';
+
+        if (file_exists($file)) {
+            require $file;
+        }
     }
 }

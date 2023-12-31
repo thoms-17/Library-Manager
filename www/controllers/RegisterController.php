@@ -44,6 +44,7 @@ class RegisterController
                 $user->setEmail($email);
                 $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
                 $user->setCreationDate($creation_date);
+                $user->setRole('user');
 
                 try {
                     $user->save();

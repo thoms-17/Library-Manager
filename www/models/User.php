@@ -15,6 +15,7 @@ class User
     private $password;
     private $creation_date;
     private $profile_image;
+    private $role;
     private static $pdo;
 
     public function __construct()
@@ -48,6 +49,10 @@ class User
     public function setProfileImage($profile_image)
     {
         $this->profile_image = $profile_image;
+    }
+    public function setRole($role)
+    {
+        $this->role = $role;
     }
 
     public function save()

@@ -18,7 +18,7 @@
 
                 <?php if (isset($_SESSION['user_id'])) : ?>
                     <?php if ($_SESSION['role'] == 'admin') : ?>
-                        <a class="dropdown-item" href="/admin">Dashboard</a>
+                        <a class="dropdown-item" href="/admin/dashboard">Dashboard</a>
                         <a class="dropdown-item" href="/account">Mon Compte</a>
                         <a class="dropdown-item" href="/logout">Déconnexion</a>
                     <?php else : ?>

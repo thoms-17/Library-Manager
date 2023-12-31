@@ -46,4 +46,8 @@
   controller: EmailVerificationController
   action: index
 
-# Photo de profil
+# Dashboard Admin
+
+/admin/dashboard:
+  controller: AdminDashboardController
+  action: index
