@@ -10,6 +10,7 @@ $routes = [
     '/logout' => ['controller' => 'LogoutController', 'action' => 'index'],
     '/account' => ['controller' => 'AccountController', 'action' => 'index'],
     '/admin/dashboard' => ['controller' => 'AdminDashboardController', 'action' => 'index'],
+    '/admin/logs' => ['controller' => 'AdminLogsController', 'action' => 'index'],
 ];
 
 function route($action)

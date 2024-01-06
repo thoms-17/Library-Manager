@@ -108,9 +108,12 @@ class User
 
         // Vérifier si l'utilisateur existe et si le mot de passe est correct.
         if ($user && password_verify($password, $user['password'])) {
+            // Enrregistrement de la connexion dans la table logs
+            $this->logConnection($user['username'], 'Connexion réussie', $user['id']);
             return true; // Authentification réussie
         }
 
+        $this->logConnection($username, 'Tentative de connexion échouée');
         return false; // Authentification échouée
     }
 
@@ -125,5 +128,18 @@ class User
         $userData = $statement->fetch(PDO::FETCH_ASSOC);
 
         return $userData; // Retourne un tableau associatif contenant l'ID et le rôle de l'utilisateur
+    }
+
+    public function logConnection($username, $action, $userId = null)
+    {
+        $query = "INSERT INTO logs (user_id, username, action) VALUES (:user_id, :username, :action)";
+        $statement = self::$pdo->prepare($query);
+
+        // Utilisez la valeur de $userId si elle est fournie, sinon, laissez NULL
+        $statement->bindValue(':user_id', $userId, PDO::PARAM_INT);
+        $statement->bindValue(':username', $username);
+        $statement->bindValue(':action', $action);
+
+        $statement->execute();
     }
 }

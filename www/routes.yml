@@ -51,3 +51,7 @@
 /admin/dashboard:
   controller: AdminDashboardController
   action: index
+
+/admin/logs:
+  controller: AdminLogsController
+  action: index
