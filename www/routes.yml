@@ -49,9 +49,13 @@
 # Dashboard Admin
 
 /admin/dashboard:
-  controller: AdminDashboardController
-  action: index
+  controller: AdminController
+  action: dashboard
 
 /admin/logs:
-  controller: AdminLogsController
+  controller: AdminController
+  action: logs
+
+/admin/users:
+  controller: AdminController
   action: index

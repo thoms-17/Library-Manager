@@ -11,7 +11,7 @@
 <body>
 
     <div class="container my-5">
-        <h1 class="mt-4 text-center">Admin Dashboard</h1>
+        <h1 class="mt-4 text-center">Logs de connexion</h1>
 
         <!-- Ajoutez un ID à votre table -->
         <table id="logsTable" class="table">

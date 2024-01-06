@@ -3,13 +3,13 @@
 
 <head>
     <title>Mon site</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-        <a class="navbar-brand text-white" href="/home">Mon Site</a>
+        <a class="navbar-brand text-white" href="/home">MyProject</a>
         <div class="nav-item dropdown ml-auto">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user text-white"></i>

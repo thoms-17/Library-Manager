@@ -10,7 +10,3 @@
     transition: transform 0.3s ease; /* Durée plus courte au survol */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-.custom-color {
-    color: blue;
-}

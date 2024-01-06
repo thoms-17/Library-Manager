@@ -130,6 +130,17 @@ class User
         return $userData; // Retourne un tableau associatif contenant l'ID et le rôle de l'utilisateur
     }
 
+    public function getAllUsers()
+    {
+        $query = "SELECT * FROM users";
+        $statement = self::$pdo->prepare($query);
+        $statement->execute();
+
+        $usersData = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $usersData;
+    }
+
     public function logConnection($username, $action, $userId = null)
     {
         $query = "INSERT INTO logs (user_id, username, action) VALUES (:user_id, :username, :action)";
