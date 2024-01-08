@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
 </head>
 
 <body class="bg-light">
     <div class="container mt-5">
         <div class="border p-4 bg-white col-md-6 mx-auto">
-            <h1 class="mb-4">Connexion</h1>
+            <h1 class="mb-4 text-center">Connexion</h1>
 
             <form action="/login/submit" method="POST">
                 <div class="form-group">
@@ -18,19 +19,16 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Mot de passe :</label>
-                    <!-- Ajoutez la classe password-container -->
                     <div class="input-group password-container">
                         <input type="password" name="password" id="password" class="form-control" required>
-                        <!-- Ajoutez l'icône directement dans le champ sans couleur de fond -->
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary active" type="button" id="togglePassword" style="border: none;">
                                 <i class="fa fa-eye-slash" id="eyeIcon" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
-
                 </div>
-                <div class="form-group">
+                <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary">Se connecter</button>
                 </div>
                 <?php if (isset($errorMessage)) : ?>

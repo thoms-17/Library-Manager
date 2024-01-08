@@ -10,7 +10,7 @@
 <body class="bg-light">
     <div class="container mt-5">
         <div class="border p-4 bg-white col-md-6 mx-auto">
-            <h1 class="mb-4">Inscription</h1>
+            <h1 class="mb-4 text-center">Inscription</h1>
 
             <?php if (isset($_SESSION['verification_message'])) : ?>
                 <p class="alert alert-success"><?= $_SESSION['verification_message'] ?></p>
