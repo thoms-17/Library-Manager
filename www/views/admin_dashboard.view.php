@@ -14,7 +14,7 @@
 
         <!-- Widgets -->
         <div class="row">
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4 col-6">
                 <a href="/admin/logs" style="text-decoration: none; color: inherit;">
                     <div class="card">
                         <div class="card-body text-center">
@@ -25,7 +25,7 @@
                 </a>
             </div>
 
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4 col-6">
                 <a href="/admin/users" style="text-decoration: none; color: inherit;">
                     <div class="card">
                         <div class="card-body text-center">
