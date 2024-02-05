@@ -34,6 +34,11 @@
   controller: LogoutController
   action: index
 
+#Delete
+/delete-account:
+  controller: DeleteAccountController
+  action: index
+  
 # User 
 
 /account:

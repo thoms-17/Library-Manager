@@ -3,15 +3,15 @@
 $routes = [
     '/' => ['controller' => 'HomeController', 'action' => 'index'],
     '/home' => ['controller' => 'HomeController', 'action' => 'index'],
-    '/register' => ['controller' => 'RegisterController', 'action' => 'index'],
+    '/register' => ['controller' => 'User\\RegisterController', 'action' => 'index'],
     '/register/submit' => ['controller' => 'RegisterController', 'action' => 'register'],
-    '/login' => ['controller' => 'LoginController', 'action' => 'index'],
-    '/login/submit' => ['controller' => 'LoginController', 'action' => 'login'],
-    '/logout' => ['controller' => 'LogoutController', 'action' => 'index'],
-    '/account' => ['controller' => 'AccountController', 'action' => 'index'],
-    '/admin/dashboard' => ['controller' => 'AdminController', 'action' => 'dashboard'],
-    '/admin/logs' => ['controller' => 'AdminController', 'action' => 'logs'],
-    '/admin/users' => ['controller' => 'AdminController', 'action' => 'listUsers'],
+    '/login' => ['controller' => 'User\\LoginController', 'action' => 'index'],
+    '/login/submit' => ['controller' => 'User\\LoginController', 'action' => 'login'],
+    '/logout' => ['controller' => 'User\\LogoutController', 'action' => 'index'],
+    '/account' => ['controller' => 'User\\AccountController', 'action' => 'index'],
+    '/admin/dashboard' => ['controller' => 'Admin\\AdminController', 'action' => 'dashboard'],
+    '/admin/logs' => ['controller' => 'Admin\\AdminController', 'action' => 'logs'],
+    '/admin/users' => ['controller' => 'Admin\\AdminController', 'action' => 'listUsers'],
 ];
 
 function route($action)

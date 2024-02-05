@@ -153,4 +153,7 @@ class User
 
         $statement->execute();
     }
+    public function deleteUser(){
+        
+    }
 }
