@@ -4,7 +4,7 @@ $routes = [
     '/' => ['controller' => 'HomeController', 'action' => 'index'],
     '/home' => ['controller' => 'HomeController', 'action' => 'index'],
     '/register' => ['controller' => 'User\\RegisterController', 'action' => 'index'],
-    '/register/submit' => ['controller' => 'RegisterController', 'action' => 'register'],
+    '/register/submit' => ['controller' => 'User\\RegisterController', 'action' => 'register'],
     '/login' => ['controller' => 'User\\LoginController', 'action' => 'index'],
     '/login/submit' => ['controller' => 'User\\LoginController', 'action' => 'login'],
     '/logout' => ['controller' => 'User\\LogoutController', 'action' => 'index'],

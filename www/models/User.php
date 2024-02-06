@@ -38,7 +38,7 @@ class User
 
     public function setPassword($password)
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $password;
     }
 
     public function setCreationDate($creation_date)
@@ -108,11 +108,10 @@ class User
 
         // Vérifier si l'utilisateur existe et si le mot de passe est correct.
         if ($user && password_verify($password, $user['password'])) {
-            // Enrregistrement de la connexion dans la table logs
+            // Enregistrement de la connexion dans la table logs
             $this->logConnection($user['username'], 'Connexion réussie', $user['id']);
             return true; // Authentification réussie
         }
-
         $this->logConnection($username, 'Tentative de connexion échouée');
         return false; // Authentification échouée
     }
@@ -153,7 +152,35 @@ class User
 
         $statement->execute();
     }
-    public function deleteUser(){
-        
+
+    // Dans la classe User de votre modèle
+    public function deleteUser($userId, $password)
+    {
+        // Récupérer les informations de l'utilisateur
+        $userData = $this->getUserDataById($userId);
+
+        // Vérifier si le mot de passe est correct
+        if (password_verify($password, $userData['password'])) {
+            // Supprimer le compte
+            $query = "DELETE FROM users WHERE id = :user_id";
+            $statement = self::$pdo->prepare($query);
+            $statement->bindValue(':user_id', $userId, PDO::PARAM_INT);
+            $statement->execute();
+
+            return true; // Suppression réussie
+        }
+
+        return false; // Mot de passe incorrect
+    }
+
+    // Ajoutez également une méthode pour récupérer les informations de l'utilisateur par ID
+    public function getUserDataById($userId)
+    {
+        $query = "SELECT * FROM users WHERE id = :user_id";
+        $statement = self::$pdo->prepare($query);
+        $statement->bindValue(':user_id', $userId, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 }

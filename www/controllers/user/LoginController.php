@@ -43,7 +43,7 @@ class LoginController
             $_SESSION['role'] = $userData['role'];
             $_SESSION['username'] = $userData['username'];
             $_SESSION['email'] = $userData['email'];
-            $_SESSION['creation_date'] = $userData['creation_date'];
+            $_SESSION['creation_date'] = $userData['creation_date'];            
 
             // Rediriger l'utilisateur vers sa page de compte
             header('Location: /home');
