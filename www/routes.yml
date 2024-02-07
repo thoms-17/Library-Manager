@@ -35,9 +35,14 @@
   action: index
 
 #Delete
+
 /delete-account:
   controller: DeleteAccountController
-  action: index
+  action: deleteAccount
+
+/delete-account-success:
+  controller: DeleteAccountController
+  action : deleteSuccess
   
 # User 
 

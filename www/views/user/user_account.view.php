@@ -79,7 +79,7 @@
                     <p class="card-text">Date d'inscription : <?= date("d/m/Y", strtotime($_SESSION['creation_date'])) ?></p>
 
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">
-                        Supprimer le Compte
+                        Supprimer mon compte
                     </button>
 
                     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -91,25 +91,38 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <p>Veuillez saisir votre mot de passe pour confirmer la suppression de votre compte.</p>
-                                    <input type="password" class="form-control" id="confirmPassword" placeholder="Mot de passe">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">Supprimer</button>
-                                </div>
+                                <form action="/delete-account" method="POST">
+                                    <div class="modal-body">
+                                        <p>Veuillez saisir votre mot de passe pour confirmer la suppression de votre compte.</p>
+                                        <input type="password" class="form-control mb-3" name="confirmPassword" id="confirmPassword" placeholder="Mot de passe">
+                                        <?php if (isset($delete_error_message)) : ?>
+                                            <p class="alert alert-danger"><?= $delete_error_message ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        <button type="submit" class="btn btn-danger">Confirmer la suppression du compte</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <?php if (isset($delete_error_message)) : ?>
+                <script>
+                    // Afficher la fenêtre modale au chargement de la page
+                    $(document).ready(function() {
+                        $('#confirmDeleteModal').modal('show');
+                    });
+                </script>
+            <?php endif; ?>
+
         <?php else : ?>
             <p class="alert alert-danger">Impossible de récupérer les informations de l'utilisateur.</p>
         <?php endif; ?>
     </div>
-    <script src="../js/deleteAccount.js"></script>
 </body>
 
 </html>

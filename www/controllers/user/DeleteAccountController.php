@@ -4,27 +4,32 @@ namespace App\Controllers\User;
 
 use App\Models\User;
 
-class AccountController
+class DeleteAccountController
 {
     // Dans votre contrôleur (par exemple, UserController)
     public function deleteAccount()
     {
         // Récupérer les informations de l'utilisateur actuellement connecté
+        $delete_error_message = '';
         $userModel = new User();
         $userData = $userModel->getUserDataByUsername($_SESSION['username']);
 
-        // Vérifier si la suppression est autorisée (par exemple, en utilisant un jeton ou une vérification supplémentaire)
-
-        // Appeler la méthode deleteUser avec l'ID de l'utilisateur et le mot de passe saisi
-        $success = $userModel->deleteUser($userData['id'], $_POST['password']);
-
-        // Traiter la réponse (par exemple, rediriger l'utilisateur avec un message)
-        if ($success) {
-            // Afficher un message de succès et déconnecter l'utilisateur, etc.
-            echo 'Compte supprimé avec succès';
+        if ($userModel->deleteUser($userData['id'], $_POST['confirmPassword'])) {
+            session_destroy();
+            header('Location: /delete-account-success');
+            exit;
         } else {
-            // Afficher un message d'erreur (mot de passe incorrect, etc.)
-            echo 'Échec de la suppression du compte';
+            // La suppression du compte a échoué, vous pouvez gérer cela ici
+            //$delete_error_message = "Mot de passe incorrect";
+            $_SESSION['delete_account_error'] = "Mot de passe incorrect.";
+            // Rediriger vers une page appropriée ou afficher un message d'erreur
+            header('Location: /account'); // Redirection vers la page de compte par défaut
+            exit;
         }
+    }
+
+    public function deleteSuccess() {
+        require_once 'views/layout.view.php';
+        require_once 'views/delete_account_success.view.php';
     }
 }

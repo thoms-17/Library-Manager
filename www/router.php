@@ -12,6 +12,8 @@ $routes = [
     '/admin/dashboard' => ['controller' => 'Admin\\AdminController', 'action' => 'dashboard'],
     '/admin/logs' => ['controller' => 'Admin\\AdminController', 'action' => 'logs'],
     '/admin/users' => ['controller' => 'Admin\\AdminController', 'action' => 'listUsers'],
+    '/delete-account' => ['controller' => 'User\\DeleteAccountController', 'action' => 'deleteAccount'],
+    '/delete-account-success' => ['controller' => 'User\\DeleteAccountController', 'action' => 'deleteSuccess'],
 ];
 
 function route($action)
