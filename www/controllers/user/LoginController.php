@@ -28,6 +28,10 @@ class LoginController
 
     public function login()
     {
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            header("Location: /login");
+            exit;
+        }
         // Récupérer les données du formulaire
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -43,7 +47,7 @@ class LoginController
             $_SESSION['role'] = $userData['role'];
             $_SESSION['username'] = $userData['username'];
             $_SESSION['email'] = $userData['email'];
-            $_SESSION['creation_date'] = $userData['creation_date'];            
+            $_SESSION['creation_date'] = $userData['creation_date'];
 
             // Rediriger l'utilisateur vers sa page de compte
             header('Location: /home');

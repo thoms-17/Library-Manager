@@ -9,6 +9,10 @@ class DeleteAccountController
     // Dans votre contrôleur (par exemple, UserController)
     public function deleteAccount()
     {
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            header("Location: /home");
+            exit;
+        }
         // Récupérer les informations de l'utilisateur actuellement connecté
         $delete_error_message = '';
         $userModel = new User();
@@ -28,7 +32,12 @@ class DeleteAccountController
         }
     }
 
-    public function deleteSuccess() {
+    public function deleteSuccess()
+    {
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            header("Location: /home");
+            exit;
+        }
         require_once 'views/layout.view.php';
         require_once 'views/delete_account_success.view.php';
     }

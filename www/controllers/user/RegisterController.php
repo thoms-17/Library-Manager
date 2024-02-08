@@ -22,6 +22,10 @@ class RegisterController
 
     public function register()
     {
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            header("Location: /register");
+            exit;
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $email = $_POST['email'];
