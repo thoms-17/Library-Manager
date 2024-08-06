@@ -55,6 +55,7 @@ class RegisterController
                     header('Location: /login');
                     exit;
                 } catch (\Exception $e) {
+                    echo $e->getMessage();
                     $errorMessage = "Une erreur s'est produite lors de l'enregistrement de l'utilisateur.";
                 }
             }

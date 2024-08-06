@@ -14,7 +14,7 @@ class User
     private $email;
     private $password;
     private $creation_date;
-    private $profile_image;
+    //private $profile_image;
     private $role;
     private static $pdo;
 
@@ -46,10 +46,10 @@ class User
         $this->creation_date = $creation_date;
     }
 
-    public function setProfileImage($profile_image)
-    {
-        $this->profile_image = $profile_image;
-    }
+    // public function setProfileImage($profile_image)
+    // {
+    //     $this->profile_image = $profile_image;
+    // }
     public function setRole($role)
     {
         $this->role = $role;
@@ -63,7 +63,7 @@ class User
         }
 
         // Préparation de la requête SQL avec des paramètres nommés
-        $query = "INSERT INTO users (username, email, password, creation_date, profile_image) VALUES (:username, :email, :password, :creation_date, :profile_image)";
+        $query = "INSERT INTO users (username, email, password, creation_date) VALUES (:username, :email, :password, :creation_date)";
         $statement = self::$pdo->prepare($query);
 
         // Liaison des valeurs avec les paramètres
@@ -71,7 +71,7 @@ class User
         $statement->bindValue(':email', $this->email);
         $statement->bindValue(':password', $this->password);
         $statement->bindValue(':creation_date', $this->creation_date);
-        $statement->bindValue(':profile_image', $this->profile_image, PDO::PARAM_LOB);
+        //$statement->bindValue(':profile_image', $this->profile_image, PDO::PARAM_LOB);
 
         // Exécution de la requête préparée
         if (!$statement->execute()) {
