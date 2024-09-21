@@ -19,6 +19,10 @@ $routes = [
     '/library/book/{id}' => ['controller' => 'Library\\LibraryController', 'action' => 'viewBook', 'method' => 'GET'],
     '/library/book/{id}/add-review' => ['controller' => 'Library\\LibraryController', 'action' => 'addReview', 'method' => 'POST'],
     '/library/delete/{id}' => ['controller' => 'Library\\LibraryController', 'action' => 'deleteBook', 'method' => 'POST'],
+    '/kanban' => ['controller' => 'KanbanController', 'action' => 'index', 'method' => 'GET'],
+    '/kanban/add-task' => ['controller' => 'KanbanController', 'action' => 'addTask', 'method' => 'POST'],
+    '/kanban/update-task-status/{id}' => ['controller' => 'KanbanController', 'action' => 'updateTaskStatus', 'method' => 'POST'],
+    '/kanban/delete-task/{id}' => ['controller' => 'KanbanController', 'action' => 'deleteTask', 'method' => 'POST'],
 ];
 
 function route($action)

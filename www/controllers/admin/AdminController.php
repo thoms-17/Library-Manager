@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\Logs;
+use App\Models\Log;
 use App\Models\User;
 
 class AdminController
@@ -26,7 +26,7 @@ class AdminController
     {
         if (isset($_SESSION['user_id'])) {
             if ($_SESSION['role'] == 'admin') {
-                $logs = new Logs();
+                $logs = new Log();
                 $logsData = $logs->getLogs();
                 require_once 'views/layout.view.php';
                 require_once 'views/admin/admin_logs.view.php';
