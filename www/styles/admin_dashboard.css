@@ -1,6 +1,3 @@
-/* styles.css */
-
-/* Ajoutez du style pour l'effet de survol */
 .card {
     transition: transform 0.5s ease; /* Durée plus longue par défaut */
 }

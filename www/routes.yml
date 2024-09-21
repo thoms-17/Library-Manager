@@ -69,3 +69,25 @@
 /admin/users:
   controller: AdminController
   action: index
+
+# Bibliothèque
+
+library:
+  controller: LibraryController
+  action: index
+
+library/add:
+  controller: LibraryController
+  action: addBook
+
+library/book/{id}:
+  controller: LibraryController
+  action: viewBook
+
+library/book/{id}/add-review:
+  controller: LibraryController
+  action: addReview
+
+library/delete/{id}:
+  controller: LibraryController
+  action: deleteBook
