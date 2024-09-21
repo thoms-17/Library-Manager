@@ -8,46 +8,38 @@ class KanbanController
 {
     private $taskModel;
 
-    public function __construct(Task $taskModel)
+    public function __construct()
     {
-        $this->taskModel = $taskModel;
+        $this->taskModel = new Task();
     }
 
-    // Afficher le tableau Kanban
     public function index()
     {
         $tasks = $this->taskModel->getAllTasks();
-        require_once '../views/kanban/index.php';  // Vue pour afficher le tableau Kanban
+        require_once 'views/layout.view.php';
+        require_once 'views/kanban/kanban.view.php';
     }
 
-    // Ajouter une nouvelle tâche
     public function addTask()
+{
+    if ($_POST['title'] && $_POST['description']) {
+        $this->taskModel->addTask($_POST['title'], $_POST['description']);
+    }
+    header('Location: /kanban');
+}
+
+
+    public function updateTaskStatus($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $title = $_POST['title'];
-            $description = $_POST['description'];
-            $this->taskModel->addTask($title, $description);
+        if (isset($_POST['status'])) {
+            $this->taskModel->updateTaskStatus($id, $_POST['status']);
         }
-        header('Location: /kanban');
-        exit();
+        header('Location: /kanban'); // Redirige vers la page Kanban
     }
 
-    // Mettre à jour le statut d'une tâche
-    public function updateTask($id)
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $status = $_POST['status'];
-            $this->taskModel->updateTask($id, $status);
-        }
-        header('Location: /kanban');
-        exit();
-    }
-
-    // Supprimer une tâche
     public function deleteTask($id)
     {
         $this->taskModel->deleteTask($id);
-        header('Location: /kanban');
-        exit();
+        header('Location: /kanban'); // Redirige vers la page Kanban
     }
 }

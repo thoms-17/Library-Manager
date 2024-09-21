@@ -16,7 +16,7 @@
         <div class="row">
 
             <div class="col-md-4 mb-4 col-6">
-                <a href="/library" style="text-decoration: none; color: inherit;">
+                <a href="/kanban" style="text-decoration: none; color: inherit;">
                     <div class="card">
                         <div class="card-body text-center">
                             <i class="fa-solid fa-list-check fa-3x mb-3 text-primary"></i>
