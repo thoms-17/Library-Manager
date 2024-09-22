@@ -21,20 +21,24 @@ class KanbanController
     }
 
     public function addTask()
-{
-    if ($_POST['title'] && $_POST['description']) {
-        $this->taskModel->addTask($_POST['title'], $_POST['description']);
-    }
-    header('Location: /kanban');
-}
-
-
-    public function updateTaskStatus($id)
     {
-        if (isset($_POST['status'])) {
-            $this->taskModel->updateTaskStatus($id, $_POST['status']);
+        if ($_POST['title'] && $_POST['description']) {
+            $this->taskModel->addTask($_POST['title'], $_POST['description']);
         }
-        header('Location: /kanban'); // Redirige vers la page Kanban
+        header('Location: /kanban');
+    }
+
+    public function updateTask($id)
+    {
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $status = $_POST['status'];
+        $updated_at = date('Y-m-d H:i:s');
+
+        $this->taskModel->updateTask($id, $title, $description, $status, $updated_at);
+
+        header('Location: /kanban');
+        exit;
     }
 
     public function deleteTask($id)

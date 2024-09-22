@@ -28,11 +28,16 @@ class Task
         return $stmt->execute([$title, $description, $status]);
     }
 
-    public function updateTask($id, $status)
-    {
-        $stmt = self::$pdo->prepare("UPDATE tasks SET status = ? WHERE id = ?");
-        return $stmt->execute([$status, $id]);
-    }
+    public function updateTask($id, $title, $description, $status, $updated_at) {
+        $sql = "UPDATE tasks SET title = :title, description = :description, status = :status, updated_at = :updated_at WHERE id = :id";
+        $stmt = self::$pdo->prepare($sql);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':updated_at', $updated_at);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }    
 
     public function deleteTask($id)
     {

@@ -21,7 +21,7 @@ $routes = [
     '/library/delete/{id}' => ['controller' => 'Library\\LibraryController', 'action' => 'deleteBook', 'method' => 'POST'],
     '/kanban' => ['controller' => 'KanbanController', 'action' => 'index', 'method' => 'GET'],
     '/kanban/add-task' => ['controller' => 'KanbanController', 'action' => 'addTask', 'method' => 'POST'],
-    '/kanban/update-task-status/{id}' => ['controller' => 'KanbanController', 'action' => 'updateTaskStatus', 'method' => 'POST'],
+    '/kanban/update-task/{id}' => ['controller' => 'KanbanController', 'action' => 'updateTask', 'method' => 'POST'],
     '/kanban/delete-task/{id}' => ['controller' => 'KanbanController', 'action' => 'deleteTask', 'method' => 'POST'],
 ];
 
