@@ -40,7 +40,7 @@
             <ul class="list-group" id="todo">
                 <?php foreach ($tasks as $task) : ?>
                     <?php if ($task['status'] === 'to_do') : ?>
-                        <li class="list-group-item" data-id="<?= $task['id'] ?>">
+                        <li class="list-group-item" data-id="<?= $task['id'] ?>" draggable="true">
                             <?= $task['title'] ?>
 
                             <!-- Formulaire de modification -->
@@ -71,15 +71,7 @@
                                                     <label for="editTaskDescription">Description</label>
                                                     <textarea class="form-control" name="description" rows="3" required><?= $task['description'] ?></textarea>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="editTaskStatus">Statut</label>
-                                                    <select class="form-control" name="status" required>
-                                                        <option value="to_do" <?= $task['status'] === 'to_do' ? 'selected' : '' ?>>À faire</option>
-                                                        <option value="in_progress" <?= $task['status'] === 'in_progress' ? 'selected' : '' ?>>En cours</option>
-                                                        <option value="done" <?= $task['status'] === 'done' ? 'selected' : '' ?>>Terminé</option>
-                                                    </select>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Modifier</button>
+                                                <button type="submit" class="btn btn-primary">Confirmer</button>
                                             </form>
                                         </div>
                                     </div>
@@ -97,7 +89,7 @@
             <ul class="list-group" id="in-progress">
                 <?php foreach ($tasks as $task) : ?>
                     <?php if ($task['status'] === 'in_progress') : ?>
-                        <li class="list-group-item" data-id="<?= $task['id'] ?>">
+                        <li class="list-group-item" data-id="<?= $task['id'] ?>" draggable="true">
                             <?= $task['title'] ?>
 
                             <!-- Formulaire de modification -->
@@ -154,7 +146,7 @@
             <ul class="list-group" id="done">
                 <?php foreach ($tasks as $task) : ?>
                     <?php if ($task['status'] === 'done') : ?>
-                        <li class="list-group-item" data-id="<?= $task['id'] ?>">
+                        <li class="list-group-item" data-id="<?= $task['id'] ?>" draggable="true">
                             <?= $task['title'] ?>
 
                             <!-- Formulaire de modification -->
@@ -208,54 +200,83 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const lists = document.querySelectorAll('.list-group');
+    document.addEventListener('DOMContentLoaded', function() {
+        const tasks = document.querySelectorAll('.list-group-item');
+        const columns = document.querySelectorAll('.list-group');
 
-    lists.forEach(list => {
-        list.addEventListener('dragover', function(event) {
-            event.preventDefault();
+        tasks.forEach(task => {
+            task.addEventListener('dragstart', function(event) {
+                console.log('Drag started for task:', task.dataset.id); // Vérification du drag
+                event.dataTransfer.setData('text/plain', task.dataset.id); // Sauvegarde l'ID de la tâche
+                event.dataTransfer.effectAllowed = 'move'; // Autorise le déplacement
+            });
         });
 
-        list.addEventListener('drop', function(event) {
-            const id = event.dataTransfer.getData('text/plain');
-            const taskElement = document.querySelector(`[data-id="${id}"]`);
-            const listItem = event.target.closest('.list-group-item');
+        columns.forEach(column => {
+            // Empêche le comportement par défaut pour permettre le drop
+            column.addEventListener('dragover', function(event) {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = 'move'; // Indiquer que le déplacement est permis
+                column.classList.add('dragging-over'); // Ajouter feedback visuel
+            });
 
-            if (listItem) {
-                listItem.parentNode.insertBefore(taskElement, listItem);
-            } else {
-                list.appendChild(taskElement);
-            }
+            // Retirer le feedback visuel si l'élément quitte la zone de drop
+            column.addEventListener('dragleave', function(event) {
+                column.classList.remove('dragging-over');
+            });
 
-            // Mettre à jour le statut de la tâche ici, si nécessaire
-            updateTaskStatus(taskElement.dataset.id, list.id);
+            // Gérer le drop
+            column.addEventListener('drop', function(event) {
+                event.preventDefault();
+                column.classList.remove('dragging-over'); // Enlever le feedback visuel
+
+                const id = event.dataTransfer.getData('text/plain');
+                const taskElement = document.querySelector(`[data-id="${id}"]`);
+
+                if (taskElement) {
+                    // Ajouter la tâche à la nouvelle colonne
+                    column.appendChild(taskElement);
+
+                    // Mettre à jour le statut de la tâche en fonction de la nouvelle colonne
+                    updateTaskStatus(taskElement.dataset.id, column.id);
+                }
+            });
         });
     });
 
-    document.querySelectorAll('.list-group-item').forEach(item => {
-        item.addEventListener('dragstart', function(event) {
-            event.dataTransfer.setData('text/plain', item.dataset.id);
-        });
-    });
-});
+    // Fonction pour envoyer la mise à jour du statut au serveur
+    function updateTaskStatus(taskId, newStatus) {
+        const statusMap = {
+            'todo': 'to_do',
+            'in-progress': 'in_progress',
+            'done': 'done'
+        };
 
-// Fonction pour mettre à jour le statut de la tâche
-function updateTaskStatus(taskId, newStatus) {
-    const statusMap = {
-        'todo': 'to_do',
-        'in-progress': 'in_progress',
-        'done': 'done'
-    };
-
-    const newStatusKey = Object.keys(statusMap).find(key => statusMap[key] === newStatus);
-
-    // Envoyer une requête pour mettre à jour le statut
-    fetch(`/kanban/update-task/${taskId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ status: newStatusKey })
-    });
-}
+        if (statusMap[newStatus]) {
+            fetch(`/kanban/update-task/${taskId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        status: statusMap[newStatus]
+                    })
+                })
+                .then(response => response.text())
+                .then(text => {
+                    console.log('Réponse brute du serveur:', text);
+                    try {
+                        const data = JSON.parse(text); // Essaie de parser le texte en JSON
+                        console.log('Mise à jour réussie:', data);
+                    } catch (error) {
+                        console.error('Erreur lors du parsing JSON:', error, 'Réponse brute:', text);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la mise à jour du statut:', error);
+                }); // Récupère le corps de la réponse
+        } else {
+            console.error('Statut non reconnu:', newStatus);
+        }
+    }
 </script>

@@ -28,16 +28,56 @@ class Task
         return $stmt->execute([$title, $description, $status]);
     }
 
-    public function updateTask($id, $title, $description, $status, $updated_at) {
-        $sql = "UPDATE tasks SET title = :title, description = :description, status = :status, updated_at = :updated_at WHERE id = :id";
+    // public function updateTask($id, $title, $description, $status, $updated_at) {
+    //     $sql = "UPDATE tasks SET title = :title, description = :description, status = :status, updated_at = :updated_at WHERE id = :id";
+    //     $stmt = self::$pdo->prepare($sql);
+    //     $stmt->bindParam(':title', $title);
+    //     $stmt->bindParam(':description', $description);
+    //     $stmt->bindParam(':status', $status);
+    //     $stmt->bindParam(':updated_at', $updated_at);
+    //     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    //     return $stmt->execute();
+    // }    
+
+    public function updateTask($id, $title = null, $description = null, $status, $updated_at)
+    {
+        // Commencer la requête de base
+        $sql = "UPDATE tasks SET ";
+
+        // Créer un tableau pour stocker les parties de la requête dynamique
+        $updates = [];
+        $params = [];
+
+        // Ajouter les parties à mettre à jour si elles sont définies
+        if (!is_null($title)) {
+            $updates[] = "title = :title";
+            $params[':title'] = $title;
+        }
+
+        if (!is_null($description)) {
+            $updates[] = "description = :description";
+            $params[':description'] = $description;
+        }
+
+        // Le statut et la date de mise à jour sont toujours requis
+        $updates[] = "status = :status";
+        $params[':status'] = $status;
+
+        $updates[] = "updated_at = :updated_at";
+        $params[':updated_at'] = $updated_at;
+
+        // Convertir le tableau en chaîne de caractères SQL
+        $sql .= implode(", ", $updates);
+        $sql .= " WHERE id = :id";
+
+        // Préparation de la requête
         $stmt = self::$pdo->prepare($sql);
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':description', $description);
-        $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':updated_at', $updated_at);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        return $stmt->execute();
-    }    
+        $params[':id'] = $id;
+
+        // Exécution de la requête
+        return $stmt->execute($params);
+    }
+
 
     public function deleteTask($id)
     {

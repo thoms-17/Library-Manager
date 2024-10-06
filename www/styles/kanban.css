@@ -6,14 +6,29 @@
   background-color: #f9f9f9;
   min-height: 300px; /* Ajustez selon vos besoins */
 }
+
 .kanban-column h2 {
   text-align: center;
   color: #333;
 }
+
 .list-group-item {
   cursor: move; /* Indique que l'élément est déplaçable */
   transition: background-color 0.3s;
 }
+
 .list-group-item:hover {
   background-color: #e9ecef;
 }
+
+.list-group {
+  min-height: 300px; /* S'assurer que la zone de drop est assez grande */
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+}
+
+.list-group.dragging-over {
+  background-color: #e2e2e2;
+  border: 2px dashed #999; /* Feedback visuel quand on peut drop */
+}
+
