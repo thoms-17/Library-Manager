@@ -37,7 +37,7 @@
             </form>
         </div>
     </div>
-    <script src="../js/passwordToggle.js"></script>
+    <script src="../public/js/passwordToggle.js"></script>
 </body>
 
 </html>

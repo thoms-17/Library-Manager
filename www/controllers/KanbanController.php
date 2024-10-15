@@ -70,7 +70,7 @@ class KanbanController
             $updated_at = date('Y-m-d H:i:s');
 
             // Appeler le modèle pour mettre à jour tous les champs
-            $this->taskModel->updateTask($id, $title, $description, $status, $updated_at);
+            $this->taskModel->updateTask($id, $status, $updated_at, $title, $description);
 
             // Rediriger vers la vue du tableau Kanban après la mise à jour
             header('Location: /kanban');
@@ -81,6 +81,6 @@ class KanbanController
     public function deleteTask($id)
     {
         $this->taskModel->deleteTask($id);
-        header('Location: /kanban'); // Redirige vers la page Kanban
+        header('Location: /kanban');
     }
 }
