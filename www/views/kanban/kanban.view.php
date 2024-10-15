@@ -71,6 +71,14 @@
                                                     <label for="editTaskDescription">Description</label>
                                                     <textarea class="form-control" name="description" rows="3" required><?= $task['description'] ?></textarea>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="editTaskStatus">Statut</label>
+                                                    <select class="form-control" name="status" required>
+                                                        <option value="to_do" <?= $task['status'] === 'to_do' ? 'selected' : '' ?>>À faire</option>
+                                                        <option value="in_progress" <?= $task['status'] === 'in_progress' ? 'selected' : '' ?>>En cours</option>
+                                                        <option value="done" <?= $task['status'] === 'done' ? 'selected' : '' ?>>Terminé</option>
+                                                    </select>
+                                                </div>
                                                 <button type="submit" class="btn btn-primary">Confirmer</button>
                                             </form>
                                         </div>
@@ -206,7 +214,6 @@
 
         tasks.forEach(task => {
             task.addEventListener('dragstart', function(event) {
-                console.log('Drag started for task:', task.dataset.id); // Vérification du drag
                 event.dataTransfer.setData('text/plain', task.dataset.id); // Sauvegarde l'ID de la tâche
                 event.dataTransfer.effectAllowed = 'move'; // Autorise le déplacement
             });
@@ -246,13 +253,16 @@
 
     // Fonction pour envoyer la mise à jour du statut au serveur
     function updateTaskStatus(taskId, newStatus) {
+        // Conversion des ID de colonnes en statuts
         const statusMap = {
             'todo': 'to_do',
             'in-progress': 'in_progress',
             'done': 'done'
         };
 
+        // Vérifier si le statut correspond à une clé connue
         if (statusMap[newStatus]) {
+            // Envoyer la requête au serveur pour mettre à jour le statut
             fetch(`/kanban/update-task/${taskId}`, {
                     method: 'POST',
                     headers: {
@@ -262,19 +272,24 @@
                         status: statusMap[newStatus]
                     })
                 })
-                .then(response => response.text())
-                .then(text => {
-                    console.log('Réponse brute du serveur:', text);
-                    try {
-                        const data = JSON.parse(text); // Essaie de parser le texte en JSON
-                        console.log('Mise à jour réussie:', data);
-                    } catch (error) {
-                        console.error('Erreur lors du parsing JSON:', error, 'Réponse brute:', text);
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+
+                        // Mettre à jour le statut dans la modal correspondante
+                        const modalStatusSelect = document.querySelector(`#editTaskModal-${taskId} select[name="status"]`);
+                        if (modalStatusSelect) {
+                            modalStatusSelect.value = statusMap[newStatus];
+                        } else {
+                            console.error(`La modal de la tâche ${taskId} n'a pas été trouvée`);
+                        }
+                    } else {
+                        console.error('Erreur lors de la mise à jour du statut:', data.message);
                     }
                 })
                 .catch(error => {
                     console.error('Erreur lors de la mise à jour du statut:', error);
-                }); // Récupère le corps de la réponse
+                });
         } else {
             console.error('Statut non reconnu:', newStatus);
         }
