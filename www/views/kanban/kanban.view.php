@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group">
                             <label for="taskDescription">Description</label>
-                            <textarea class="form-control" id="taskDescription" name="description" rows="3" required></textarea>
+                            <textarea class="form-control" id="taskDescription" name="description" rows="3"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Ajouter</button>
                     </form>

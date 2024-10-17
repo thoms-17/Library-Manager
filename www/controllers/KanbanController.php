@@ -24,10 +24,11 @@ class KanbanController
 
     public function addTask()
     {
-        if ($_POST['title'] && $_POST['description']) {
+        if ($_POST['title'] && !empty($_POST['title'])) {
             date_default_timezone_set('Europe/Paris');
             $date = date('Y-m-d H:i:s');
-            $this->taskModel->addTask($_POST['title'], $_POST['description'], 'to_do', $date, $date);
+            $description = isset($_POST['description']) && !empty($_POST['description']) ? $_POST['description'] : '';
+            $this->taskModel->addTask($_POST['title'], $description, 'to_do', $date, $date);
         }
         header('Location: /kanban');
     }
