@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Task;
+use App\Middlewares\AuthMiddleware;
 
 class KanbanController
 {
@@ -15,6 +16,7 @@ class KanbanController
 
     public function index()
     {
+        AuthMiddleware::checkAdmin();
         $tasks = $this->taskModel->getAllTasks();
         require_once 'views/layout.view.php';
         require_once 'views/kanban/kanban.view.php';
@@ -23,7 +25,9 @@ class KanbanController
     public function addTask()
     {
         if ($_POST['title'] && $_POST['description']) {
-            $this->taskModel->addTask($_POST['title'], $_POST['description']);
+            date_default_timezone_set('Europe/Paris');
+            $date = date('Y-m-d H:i:s');
+            $this->taskModel->addTask($_POST['title'], $_POST['description'], 'to_do', $date, $date);
         }
         header('Location: /kanban');
     }
@@ -38,10 +42,11 @@ class KanbanController
             // Vérifier que les données ont bien été récupérées
             if ($data && isset($data['status'])) {
                 $status = $data['status'];
+                date_default_timezone_set('Europe/Paris');
                 $updated_at = date('Y-m-d H:i:s');
 
                 // Appeler le modèle pour mettre à jour le statut de la tâche
-                $success = $this->taskModel->updateTask($id, null, null, $status, $updated_at);
+                $success = $this->taskModel->updateTask($id, $status, $updated_at, null, null);
 
                 // Répondre avec un contenu JSON
                 header('Content-Type: application/json');
@@ -67,6 +72,7 @@ class KanbanController
             $title = $_POST['title'];
             $description = $_POST['description'];
             $status = $_POST['status'];
+            date_default_timezone_set('Europe/Paris');
             $updated_at = date('Y-m-d H:i:s');
 
             // Appeler le modèle pour mettre à jour tous les champs

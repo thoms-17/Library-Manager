@@ -22,10 +22,7 @@ class RegisterController
 
     public function register()
     {
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            header("Location: /register");
-            exit;
-        }
+        // Vérifier que la requête est bien POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $email = $_POST['email'];
@@ -33,17 +30,18 @@ class RegisterController
             $creation_date = date('Y-m-d');
 
             $user = new User();
-
             $errorMessage = '';
 
             if (!$this->isPasswordSecure($password)) {
-                $errorMessage = "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial.";
+                $errorMessage = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.";
                 $_SESSION['register_error'] = $errorMessage;
-            } elseif ($user->userExists($username, $email)) {
+            }
+
+            // Vérifier si l'utilisateur ou l'email existe déjà
+            elseif ($user->userExists($username, $email)) {
                 $errorMessage = "Ce nom d'utilisateur ou cette adresse e-mail est déjà utilisée.";
-                $_SESSION['register_error'] = $errorMessage;
             } else {
-                $user = new User();
+                // Si tout est valide, créer un nouvel utilisateur
                 $user->setUsername($username);
                 $user->setEmail($email);
                 $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
@@ -52,14 +50,19 @@ class RegisterController
 
                 try {
                     $user->save();
-                    header('Location: /login');
+                    header('Location: /login'); // Rediriger vers la page de connexion après succès
                     exit;
                 } catch (\Exception $e) {
-                    echo $e->getMessage();
                     $errorMessage = "Une erreur s'est produite lors de l'enregistrement de l'utilisateur.";
                 }
             }
+
+            // En cas d'erreur, stocker le message et rediriger vers la page d'inscription
             $_SESSION['register_error'] = $errorMessage;
+            header('Location: /register');
+            exit;
+        } else {
+            // Si la méthode n'est pas POST, rediriger vers le formulaire d'inscription
             header('Location: /register');
             exit;
         }
@@ -67,6 +70,7 @@ class RegisterController
 
     private function isPasswordSecure($password)
     {
-        return preg_match('/^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})/', $password);
+        // Vérification stricte : Au moins 8 caractères, une majuscule, un chiffre, et un caractère spécial (généralisation des caractères spéciaux)
+        return preg_match('/^(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_])(?=.{8,})/', $password);
     }
 }

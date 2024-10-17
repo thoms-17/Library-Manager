@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
-    <link rel="stylesheet" href="../styles/admin_dashboard.css">
+    <link rel="stylesheet" href="../public/styles/admin_dashboard.css">
 </head>
 
 <body>

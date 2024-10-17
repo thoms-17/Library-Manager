@@ -22,10 +22,10 @@ class Task
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function addTask($title, $description, $status = 'to_do')
+    public function addTask($title, $description, $status, $created_at, $updated_at)
     {
-        $stmt = self::$pdo->prepare("INSERT INTO tasks (title, description, status) VALUES (?, ?, ?)");
-        return $stmt->execute([$title, $description, $status]);
+        $stmt = self::$pdo->prepare("INSERT INTO tasks (title, description, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?)");
+        return $stmt->execute([$title, $description, $status, $created_at, $updated_at]);
     }
 
     public function updateTask($id, $status, $updated_at, $title = null, $description = null)
