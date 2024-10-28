@@ -40,14 +40,15 @@ function route($action)
             $controller = new $controllerName();
             $method = $route['action'];
 
-            // Passer les paramètres dynamiques à la méthode du contrôleur
+            // Passe les paramètres dynamiques à la méthode du contrôleur
             array_shift($matches);  // Retire le premier élément, qui est la correspondance complète
             call_user_func_array([$controller, $method], $matches);
             return;
         }
     }
 
-    // Gérer les erreurs 404
-    http_response_code(404);
-    echo 'Page not found';
+    // Si aucune route ne correspond, appelle le contrôleur d'erreur pour la page 404
+    $errorController = new \App\Controllers\ErrorController();
+    $errorController->notFound();
+    exit;
 }

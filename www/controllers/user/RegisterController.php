@@ -3,11 +3,13 @@
 namespace App\Controllers\User;
 
 use App\Models\User;
+use App\Middlewares\AuthMiddleware;
 
 class RegisterController
 {
     public function index()
     {
+        AuthMiddleware::redirectIfAuthenticated();
         $errorMessage = null;
 
         if (isset($_SESSION['register_error'])) {
@@ -22,6 +24,7 @@ class RegisterController
 
     public function register()
     {
+        //AuthMiddleware::redirectIfAuthenticated(); // Rediriger vers la page d'accueil si l'utilisateur est déjà connecté
         // Vérifier que la requête est bien POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];

@@ -20,7 +20,7 @@ class AuthMiddleware
         self::checkAuth(); // Vérifier si l'utilisateur est connecté
         if ($_SESSION['role'] !== 'admin') {
             // Rediriger vers une autre page si l'utilisateur n'est pas admin
-            header('Location: /account');
+            header('Location: /home');
             exit;
         }
     }
@@ -32,6 +32,16 @@ class AuthMiddleware
         if ($_SESSION['role'] !== $role) {
             // Rediriger vers une autre page si l'utilisateur n'a pas le bon rôle
             header('Location: /unauthorized');
+            exit;
+        }
+    }
+
+    // Redirige vers la page d'accueil si l'utilisateur est déjà connecté
+    public static function redirectIfAuthenticated()
+    {
+        if (isset($_SESSION['user_id'])) {
+            // Rediriger vers la page d'accueil si déjà connecté
+            header('Location: /home');
             exit;
         }
     }
