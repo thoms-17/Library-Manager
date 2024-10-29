@@ -3,17 +3,15 @@
 namespace App\Controllers\User;
 
 use App\Models\User;
+use App\Middlewares\AuthMiddleware;
+use App\Middlewares\RequestMethodMiddleware;
 
 class LoginController
 {
     public function index()
     {
         // Vérifiez si l'utilisateur est déjà connecté
-        if (isset($_SESSION['user_id'])) {
-            // Utilisateur déjà connecté, redirigez-le vers la page de compte
-            header('Location: /account');
-            exit;
-        }
+        AuthMiddleware::redirectIfAuthenticated();
 
         $errorMessage = null;
 
@@ -28,10 +26,9 @@ class LoginController
 
     public function login()
     {
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            header("Location: /login");
-            exit;
-        }
+        // Vérifie que la méthode de requête est POST
+        RequestMethodMiddleware::ensureMethod('POST');
+
         // Récupérer les données du formulaire
         $username = $_POST['username'];
         $password = $_POST['password'];

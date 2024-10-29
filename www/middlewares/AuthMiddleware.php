@@ -2,6 +2,8 @@
 
 namespace App\Middlewares;
 
+use App\Controllers\ErrorController;
+
 class AuthMiddleware
 {
     // Vérifie si l'utilisateur est authentifié
@@ -19,8 +21,8 @@ class AuthMiddleware
     {
         self::checkAuth(); // Vérifier si l'utilisateur est connecté
         if ($_SESSION['role'] !== 'admin') {
-            // Rediriger vers une autre page si l'utilisateur n'est pas admin
-            header('Location: /home');
+            // Utiliser la page 404 pour masquer l'accès non autorisé
+            (new ErrorController())->notFound();
             exit;
         }
     }
@@ -30,8 +32,8 @@ class AuthMiddleware
     {
         self::checkAuth(); // Vérifier si l'utilisateur est connecté
         if ($_SESSION['role'] !== $role) {
-            // Rediriger vers une autre page si l'utilisateur n'a pas le bon rôle
-            header('Location: /unauthorized');
+            // Masquer les pages non accessibles pour un rôle spécifique
+            (new ErrorController())->notFound();
             exit;
         }
     }
@@ -41,7 +43,7 @@ class AuthMiddleware
     {
         if (isset($_SESSION['user_id'])) {
             // Rediriger vers la page d'accueil si déjà connecté
-            header('Location: /home');
+            header('Location: /account');
             exit;
         }
     }

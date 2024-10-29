@@ -7,7 +7,7 @@ $routes = [
     '/register/submit' => ['controller' => 'User\\RegisterController', 'action' => 'register', 'method' => 'POST'],
     '/login' => ['controller' => 'User\\LoginController', 'action' => 'index', 'method' => 'GET'],
     '/login/submit' => ['controller' => 'User\\LoginController', 'action' => 'login', 'method' => 'POST'],
-    '/logout' => ['controller' => 'User\\LogoutController', 'action' => 'index', 'method' => 'GET'],
+    '/logout' => ['controller' => 'User\\LogoutController', 'action' => 'logout', 'method' => 'GET'],
     '/account' => ['controller' => 'User\\AccountController', 'action' => 'index', 'method' => 'GET'],
     '/admin/dashboard' => ['controller' => 'Admin\\AdminController', 'action' => 'dashboard', 'method' => 'GET'],
     '/admin/logs' => ['controller' => 'Admin\\AdminController', 'action' => 'logs', 'method' => 'GET'],
