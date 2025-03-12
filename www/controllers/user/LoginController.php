@@ -29,6 +29,13 @@ class LoginController
         // Vérifie que la méthode de requête est POST
         RequestMethodMiddleware::ensureMethod('POST');
 
+        // Vérifier que les champs sont bien remplis
+        if (empty($_POST['username']) || empty($_POST['password'])) {
+            $_SESSION['login_error'] = "Veuillez remplir tous les champs.";
+            header('Location: /login');
+            exit;
+        }
+
         // Récupérer les données du formulaire
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -36,28 +43,32 @@ class LoginController
         // Instancier le modèle User
         $userModel = new User();
 
-        // Vérifier l'authentification avec la méthode authenticate du modèle User
-        if ($userModel->authenticate($username, $password)) {
-            // Authentification réussie
-            $userData = $userModel->getUserDataByUsername($username);
-            $_SESSION['user_id'] = $userData['id'];
-            $_SESSION['role'] = $userData['role'];
-            $_SESSION['username'] = $userData['username'];
-            $_SESSION['email'] = $userData['email'];
-            $_SESSION['creation_date'] = $userData['creation_date'];
-
-            // Rediriger l'utilisateur vers sa page de compte
-            header('Location: /home');
-            exit;
-        } else {
-            // Authentification échouée
+        // Vérifier si l'utilisateur existe et si le mot de passe est correct
+        if (!$userModel->authenticate($username, $password)) {
             $_SESSION['login_error'] = "Nom d'utilisateur ou mot de passe incorrect.";
-            // Rediriger l'utilisateur vers la page de connexion avec un message d'erreur
             header('Location: /login');
             exit;
         }
-        // Afficher la vue register.view.php avec le formulaire d'inscription
-        require_once 'views/layout.view.php';
-        require_once 'views/user/login.view.php';
+
+        // Récupérer les informations de l'utilisateur
+        $userData = $userModel->getUserDataByUsername($username);
+
+        // Vérifier si les données utilisateur existent
+        if (!$userData || empty($userData['id'])) {
+            $_SESSION['login_error'] = "Nom d'utilisateur ou mot de passe incorrect.";
+            header('Location: /login');
+            exit;
+        }
+
+        // Stocker les informations dans la session
+        $_SESSION['user_id'] = $userData['id'];
+        $_SESSION['role'] = $userData['role'];
+        $_SESSION['username'] = $userData['username'];
+        $_SESSION['email'] = $userData['email'];
+        $_SESSION['creation_date'] = $userData['creation_date'];
+
+        // Rediriger l'utilisateur vers la page d'accueil
+        header('Location: /home');
+        exit;
     }
 }

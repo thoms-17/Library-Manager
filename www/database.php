@@ -23,8 +23,7 @@ class Database
         try {
             $pdo = new PDO($dsn, $dbUser, $dbPass);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            //echo 'Connexion à la base de données réussie ! ';
+            
             // Retourner l'instance de PDO pour être utilisée dans les autres parties de l'application
             return $pdo;
         } catch (PDOException $e) {

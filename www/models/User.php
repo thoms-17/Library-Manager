@@ -88,7 +88,6 @@ class User
         // Liaison des valeurs avec les paramètres
         $statement->bindValue(':username', $username);
         $statement->bindValue(':email', $email);
-
         $statement->execute();
 
         $result = $statement->fetch(\PDO::FETCH_ASSOC);
@@ -98,35 +97,34 @@ class User
 
     public function authenticate($username, $password)
     {
-        // Requête pour récupérer les informations de l'utilisateur correspondant au nom d'utilisateur fourni.
-        $query = "SELECT * FROM users WHERE username = :username";
-        $statement = self::$pdo->prepare($query);
-        $statement->bindValue(':username', $username);
-        $statement->execute();
+        try {
+           
+            $stmt = self::$pdo->prepare("SELECT * FROM users WHERE username = :username");
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
 
-        $user = $statement->fetch(PDO::FETCH_ASSOC);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Vérifier si l'utilisateur existe et si le mot de passe est correct.
-        if ($user && password_verify($password, $user['password'])) {
-            // Enregistrement de la connexion dans la table logs
-            $this->logConnection($user['username'], 'Connexion réussie', $user['id']);
-            return true; // Authentification réussie
+            if ($user && password_verify($password, $user['password'])) {
+                return true;
+            }
+            return false;
+        } catch (PDOException $e) {
+            die("Erreur SQL dans authenticate(): " . $e->getMessage());
         }
-        $this->logConnection($username, 'Tentative de connexion échouée');
-        return false; // Authentification échouée
     }
 
     public function getUserDataByUsername($username)
     {
-        // Requête pour récupérer l'ID et le rôle de l'utilisateur correspondant au nom d'utilisateur fourni.
-        $query = "SELECT * FROM users WHERE username = :username";
-        $statement = self::$pdo->prepare($query);
-        $statement->bindValue(':username', $username);
-        $statement->execute();
+        try {
+            $stmt = self::$pdo->prepare("SELECT * FROM users WHERE username = :username");
+            $stmt->execute(['username' => $username]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $userData = $statement->fetch(PDO::FETCH_ASSOC);
-
-        return $userData; // Retourne un tableau associatif contenant l'ID et le rôle de l'utilisateur
+            return $user ?: null;
+        } catch (PDOException $e) {
+            die("Erreur SQL dans getUserDataByUsername(): " . $e->getMessage());
+        }
     }
 
     public function getAllUsers()
@@ -149,7 +147,6 @@ class User
         $statement->bindValue(':user_id', $userId, PDO::PARAM_INT);
         $statement->bindValue(':username', $username);
         $statement->bindValue(':action', $action);
-
         $statement->execute();
     }
 
@@ -169,7 +166,6 @@ class User
 
             return true; // Suppression réussie
         }
-
         return false; // Mot de passe incorrect
     }
 
