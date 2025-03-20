@@ -4,6 +4,9 @@ namespace App\Controllers\Library;
 
 use App\Models\Book;
 use App\Models\Review;
+use App\Middlewares\AuthMiddleware;
+use App\Middlewares\RequestMethodMiddleware;
+use App\Controllers\ErrorController;
 
 class LibraryController
 {
@@ -16,24 +19,43 @@ class LibraryController
         require_once 'views/library/index.view.php';
     }
 
-    public function addBook()
+    public function showAddForm()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $bookModel = new Book();
-            $bookModel->addBook($_POST['title'], $_POST['author'], $_POST['publication_date'], $_POST['description']);
-
-            header('Location: /library');
-            exit;
-        }
+        AuthMiddleware::checkAuth();
+        AuthMiddleware::checkAdmin();
 
         require_once 'views/layout.view.php';
         require_once 'views/library/add_book.view.php';
+    }
+
+    public function addBook()
+    {
+        AuthMiddleware::checkAdmin();
+        RequestMethodMiddleware::ensureMethod('POST'); // Vérifie la méthode POST
+
+        if (!isset($_POST['title'], $_POST['author'], $_POST['publication_date'], $_POST['description'])) {
+            $_SESSION['error'] = "Tous les champs sont requis.";
+            header('Location: /library/add');
+            exit;
+        }
+
+        $bookModel = new Book();
+        $bookModel->addBook($_POST['title'], $_POST['author'], $_POST['publication_date'], $_POST['description']);
+
+        $_SESSION['success'] = "Livre ajouté avec succès.";
+        header('Location: /library');
+        exit;
     }
 
     public function viewBook($bookId)
     {
         $bookModel = new Book();
         $book = $bookModel->getBookById($bookId);
+
+        if (!$book) {
+            (new ErrorController())->notFound();
+            exit;
+        }
 
         $reviewModel = new Review();
         $reviews = $reviewModel->getReviewsByBookId($bookId);
@@ -42,26 +64,31 @@ class LibraryController
         require_once 'views/library/books_details.view.php';
     }
 
-    public function addReview($bookId)
+    public function showReviewForm($bookId)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $reviewModel = new Review();
-            $reviewModel->addReview($bookId, $_SESSION['user_id'], $_POST['content'], $_POST['rating']);
-
-            header('Location: /library/book/' . $bookId);
-            exit;
-        }
+        AuthMiddleware::checkAuth();
+        AuthMiddleware::checkAdmin();
 
         require_once 'views/layout.view.php';
         require_once 'views/library/add_review.view.php';
     }
 
+    public function addReview($bookId)
+    {
+        AuthMiddleware::checkAuth();
+        RequestMethodMiddleware::ensureMethod('POST');
+
+        $reviewModel = new Review();
+        $reviewModel->addReview($bookId, $_SESSION['user_id'], $_POST['content'], $_POST['rating']);
+
+        header('Location: /library/book/' . $bookId);
+        exit;
+    }
+
     public function deleteBook($bookId)
     {
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            header("Location: /home");
-            exit;
-        }
+        AuthMiddleware::checkAdmin();
+        RequestMethodMiddleware::ensureMethod('POST');
 
         $bookModel = new Book();
         $bookModel->deleteBook($bookId);

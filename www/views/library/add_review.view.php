@@ -13,3 +13,9 @@
         <button type="submit" class="btn btn-success">Poster l'avis</button>
     </form>
 </div>
+
+<script>
+    document.querySelector("form").addEventListener("submit", function(event) {
+        console.log("Le formulaire a été soumis !");
+    });
+</script>
