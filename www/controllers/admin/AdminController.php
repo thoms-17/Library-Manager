@@ -12,6 +12,8 @@ class AdminController
     {
         AuthMiddleware::checkAdmin();
 
+        $pageTitle = "Mon dashboard"; 
+
         require_once 'views/layout.view.php';
         require_once 'views/admin/admin_dashboard.view.php';
     }

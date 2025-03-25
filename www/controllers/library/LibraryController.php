@@ -15,6 +15,8 @@ class LibraryController
         $bookModel = new Book();
         $books = $bookModel->getAllBooks();
 
+        $pageTitle = "Biliothèque"; 
+
         require_once 'views/layout.view.php';
         require_once 'views/library/index.view.php';
     }
@@ -23,6 +25,8 @@ class LibraryController
     {
         AuthMiddleware::checkAuth();
         AuthMiddleware::checkAdmin();
+
+        $pageTitle = "Ajouter un livre"; 
 
         require_once 'views/layout.view.php';
         require_once 'views/library/add_book.view.php';
@@ -60,6 +64,8 @@ class LibraryController
         $reviewModel = new Review();
         $reviews = $reviewModel->getReviewsByBookId($bookId);
 
+        $pageTitle = "Livre : " . $book['title']; 
+
         require_once 'views/layout.view.php';
         require_once 'views/library/books_details.view.php';
     }
@@ -68,6 +74,8 @@ class LibraryController
     {
         AuthMiddleware::checkAuth();
         AuthMiddleware::checkAdmin();
+
+        $pageTitle = "Ajouter un avis le livre n° " . $bookId; 
 
         require_once 'views/layout.view.php';
         require_once 'views/library/add_review.view.php';

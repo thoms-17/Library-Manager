@@ -20,6 +20,8 @@ class LoginController
             unset($_SESSION['login_error']); // Effacer le message d'erreur de la session après l'avoir affiché
         }
 
+        $pageTitle = "Connexion";
+
         require_once 'views/layout.view.php';
         require_once 'views/user/login.view.php';
     }

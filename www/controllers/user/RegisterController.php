@@ -20,6 +20,8 @@ class RegisterController
             unset($_SESSION['register_error']); // Effacez le message d'erreur de la session après l'avoir affiché
         }
 
+        $pageTitle = "Inscription";
+
         // Afficher la vue register.view.php avec le formulaire d'inscription
         require_once 'views/layout.view.php';
         require_once 'views/user/register.view.php';

@@ -18,6 +18,9 @@ class AccountController
             $delete_error_message = $_SESSION['delete_account_error'];
             unset($_SESSION['delete_account_error']); // Effacer le message d'erreur de la session après l'avoir affiché
         }
+
+        $pageTitle = "Mon compte";
+         
         require_once 'views/layout.view.php';
         require_once 'views/user/user_account.view.php';
 
