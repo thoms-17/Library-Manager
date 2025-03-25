@@ -1,4 +1,18 @@
 /www/.env
 
-# Ignore files in the db directory
-db/*.sock
+# Ignorer tout le dossier db/
+db/
+
+# Ignorer des fichiers spécifiques au fonctionnement de MySQL
+*.pem
+*.cnf
+*.ibd
+*.dblwr
+*.index
+*.log
+*.frm
+*.MYI
+*.MYD
+*.sqlite
+*.sock
+*.pid
