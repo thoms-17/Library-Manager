@@ -5,49 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Compte</title>
-    <style>
-        .edit-profile-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #007bff;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            /* Cacher le débordement pour éviter des problèmes de positionnement */
-        }
-
-        .edit-profile-icon:hover {
-            background-color: #0056b3;
-        }
-
-        .question-mark,
-        .pencil-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
-            display: none;
-            color: #fff;
-        }
-
-        .edit-profile-icon:hover .question-mark {
-            display: block;
-        }
-
-        .edit-profile-icon:hover .pencil-icon {
-            display: block;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="../public/styles/user_account.css">
 </head>
 
 <body>
