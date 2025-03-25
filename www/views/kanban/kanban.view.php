@@ -94,7 +94,7 @@
     </div>
 </div>
 
-<!-- Section des modales -->
+<!-- Modal pour modifier une tâche -->
 <?php foreach ($tasks as $task) : ?>
     <div class="modal fade" id="editTaskModal-<?= $task['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -113,7 +113,7 @@
                         </div>
                         <div class="form-group">
                             <label for="editTaskDescription">Description</label>
-                            <textarea class="form-control" name="description" rows="3" required><?= $task['description'] ?></textarea>
+                            <textarea class="form-control" name="description" rows="3"><?= $task['description'] ?></textarea>
                         </div>
                         <div class="form-group">
                             <label for="editTaskStatus">Statut</label>
