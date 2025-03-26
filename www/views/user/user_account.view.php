@@ -18,23 +18,24 @@
                     <h5 class="card-title">Informations Utilisateur</h5>
 
                     <!-- Gestion de la photo de profil -->
-                    <div class="mt-4">
+                    <div class="mt-4 text-center">
                         <form action="/account/upload-profile-image" method="POST" enctype="multipart/form-data">
-                            <label for="profile-image" class="edit-profile-icon">
+                            <label for="profile-image">
                                 <?php if (!empty($profileImage)) : ?>
-                                    <img src="data:image/jpeg;base64,<?= $profileImage ?>" alt="Profile Image" style="border-radius: 50%; width: 100%; height: 100%;">
+                                    <img src="data:image/jpeg;base64,<?= $profileImage ?>" alt="Profile Image" class="rounded-circle" width="150">
+                                <?php else : ?>
+                                    <img src="/public/images/default_user.jpg" alt="Default Profile Image" class="rounded-circle" width="150">
                                 <?php endif; ?>
-                                <i class="fas fa-pencil-alt pencil-icon"></i>
                             </label>
-                            <input type="file" name="profile_image" id="profile-image" accept="image/*" style="display: none;">
-                            <button type="submit" class="btn btn-primary" style="display: none;">Enregistrer</button>
+                            <input type="file" name="profile_image" id="profile-image" accept="image/*" required>
+                            <button type="submit" class="btn btn-primary mt-2">Changer</button>
                         </form>
                     </div>
 
+                    <p class="card-text">Nom d'utilisateur : <?= htmlspecialchars($userData['username']) ?></p>
+                    <p class="card-text">Adresse e-mail : <?= htmlspecialchars($userData['email']) ?></p>
+                    <p class="card-text">Date d'inscription : <?= date("d/m/Y", strtotime($userData['creation_date'])) ?></p>
 
-                    <p class="card-text">Nom d'utilisateur : <?= $_SESSION['username'] ?></p>
-                    <p class="card-text">Adresse e-mail : <?= $_SESSION['email'] ?></p>
-                    <p class="card-text">Date d'inscription : <?= date("d/m/Y", strtotime($_SESSION['creation_date'])) ?></p>
 
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">
                         Supprimer mon compte

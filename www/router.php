@@ -9,6 +9,7 @@ $routes = [
     '/login/submit' => ['controller' => 'User\\LoginController', 'action' => 'login', 'method' => 'POST'],
     '/logout' => ['controller' => 'User\\LogoutController', 'action' => 'logout', 'method' => 'GET'],
     '/account' => ['controller' => 'User\\AccountController', 'action' => 'index', 'method' => 'GET'],
+    '/account/upload-profile-image' => ['controller' => 'User\\AccountController', 'action' => 'uploadProfileImage', 'method' => 'POST'],
     '/admin/dashboard' => ['controller' => 'Admin\\AdminController', 'action' => 'dashboard', 'method' => 'GET'],
     '/admin/logs' => ['controller' => 'Admin\\AdminController', 'action' => 'logs', 'method' => 'GET'],
     '/admin/users' => ['controller' => 'Admin\\AdminController', 'action' => 'listUsers', 'method' => 'GET'],

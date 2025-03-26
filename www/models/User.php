@@ -14,7 +14,6 @@ class User
     private $email;
     private $password;
     private $creation_date;
-    //private $profile_image;
     private $role;
     private static $pdo;
 
@@ -46,10 +45,6 @@ class User
         $this->creation_date = $creation_date;
     }
 
-    // public function setProfileImage($profile_image)
-    // {
-    //     $this->profile_image = $profile_image;
-    // }
     public function setRole($role)
     {
         $this->role = $role;
@@ -71,7 +66,6 @@ class User
         $statement->bindValue(':email', $this->email);
         $statement->bindValue(':password', $this->password);
         $statement->bindValue(':creation_date', $this->creation_date);
-        //$statement->bindValue(':profile_image', $this->profile_image, PDO::PARAM_LOB);
 
         // Exécution de la requête préparée
         if (!$statement->execute()) {
@@ -98,7 +92,7 @@ class User
     public function authenticate($username, $password)
     {
         try {
-           
+
             $stmt = self::$pdo->prepare("SELECT * FROM users WHERE username = :username");
             $stmt->bindParam(':username', $username);
             $stmt->execute();
@@ -150,7 +144,6 @@ class User
         $statement->execute();
     }
 
-    // Dans la classe User de votre modèle
     public function deleteUser($userId, $password)
     {
         // Récupérer les informations de l'utilisateur
@@ -178,5 +171,14 @@ class User
         $statement->execute();
 
         return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateProfileImage($userId, $imageData)
+    {
+        $query = "UPDATE users SET profile_image = :profile_image WHERE id = :user_id";
+        $statement = self::$pdo->prepare($query);
+        $statement->bindValue(':profile_image', $imageData, PDO::PARAM_LOB);
+        $statement->bindValue(':user_id', $userId, PDO::PARAM_INT);
+        return $statement->execute();
     }
 }
