@@ -1,3 +1,49 @@
+/* ===== Photo de profil en rond ===== */
+.profile-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Assurer un format carré et empêcher les distorsions */
+.profile-container img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover; /* Assure que l’image garde ses proportions */
+    display: block;
+}
+
+
+.profile-container img:hover {
+    transform: scale(1.05);
+}
+
+/* ===== Icône d'édition ===== */
+.edit-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    display: none;
+}
+
+.profile-container:hover .edit-icon {
+    display: block;
+}
+
+/* ===== Ajustement de la modal ===== */
+#imageToCrop {
+    max-width: 100%;
+    max-height: 400px;
+    display: block;
+    margin: auto;
+}
+
+/* ===== Icône de modification de profil (Optionnel si déjà existant) ===== */
 .edit-profile-icon {
     width: 50px;
     height: 50px;
@@ -10,7 +56,6 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    /* Cacher le débordement pour éviter des problèmes de positionnement */
 }
 
 .edit-profile-icon:hover {
@@ -28,14 +73,12 @@
     color: #fff;
 }
 
-.edit-profile-icon:hover .question-mark {
-    display: block;
-}
-
+.edit-profile-icon:hover .question-mark,
 .edit-profile-icon:hover .pencil-icon {
     display: block;
 }
 
+/* Cache l’input file */
 input[type="file"] {
     display: none;
 }

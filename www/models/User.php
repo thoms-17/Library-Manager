@@ -173,12 +173,22 @@ class User
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updateProfileImage($userId, $imageData)
+    public function updateUserInfo($userId, $username, $imageData = null)
     {
-        $query = "UPDATE users SET profile_image = :profile_image WHERE id = :user_id";
+        var_dump($username);
+        $query = "UPDATE users SET username = :username";
+        if ($imageData) {
+            $query .= ", profile_image = :profile_image";
+        }
+        $query .= " WHERE id = :user_id";
+
         $statement = self::$pdo->prepare($query);
-        $statement->bindValue(':profile_image', $imageData, PDO::PARAM_LOB);
+        $statement->bindValue(':username', $username, PDO::PARAM_STR);
+        if ($imageData) {
+            $statement->bindValue(':profile_image', $imageData, PDO::PARAM_LOB);
+        }
         $statement->bindValue(':user_id', $userId, PDO::PARAM_INT);
+
         return $statement->execute();
     }
 }
