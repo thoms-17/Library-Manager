@@ -45,6 +45,6 @@ class DeleteAccountController
         RequestMethodMiddleware::ensureMethod('POST');
 
         require_once 'views/layout.view.php';
-        require_once 'views/delete_account_success.view.php';
+        require_once 'views/user/delete_account_success.view.php';
     }
 }

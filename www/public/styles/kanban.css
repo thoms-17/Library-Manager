@@ -1,30 +1,59 @@
 .kanban-column {
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
+  padding: 0;
   margin-right: 15px;
   background-color: #f9f9f9;
-  min-height: 300px; /* Ajustez selon vos besoins */
+  min-height: 300px;
+  max-height: 500px;
+  overflow-y: auto;
+  position: relative;
 }
 
 .kanban-column h2 {
   text-align: center;
   color: #333;
+  margin-bottom: 0; /* Supprime l'espace en bas pour éviter un décalage */
+  position: sticky;
+  top: 0;
+  background-color: #f9f9f9;
+  padding: 10px 0;
+  z-index: 10;
+  border-bottom: 2px solid #ddd; /* Ajoute une séparation entre le titre et la liste */
 }
 
 .list-group-item {
-  cursor: move; /* Indique que l'élément est déplaçable */
+  display: flex;
+  justify-content: space-between;  /* Espace entre le titre et les boutons */
+  align-items: flex-start;  /* Aligner les éléments en haut (au lieu de centrer) */
+  cursor: move;  /* Indique que l'élément est déplaçable */
   transition: background-color 0.3s;
+  padding-right: 50px; /* Laisser de l'espace à droite pour les boutons */
+  padding-bottom: 10px; /* Espacement entre le titre et les boutons */
+  flex-wrap: wrap;  /* Permet d'ajuster le titre sur plusieurs lignes si nécessaire */
 }
 
 .list-group-item:hover {
   background-color: #e9ecef;
 }
 
-.list-group {
-  min-height: 300px; /* S'assurer que la zone de drop est assez grande */
-  background-color: #f1f1f1;
-  border: 1px solid #ddd;
+/* Style pour le titre, s'adapte à la largeur disponible */
+.list-group-item span.task-title {
+  flex-grow: 1;  /* Le titre occupe tout l'espace disponible */
+  overflow: hidden; /* Cache le texte qui déborde */
+  white-space: normal; /* Permet au texte de se couper en plusieurs lignes */
+  margin-right: 10px; /* Espacement entre le titre et le bouton */
+}
+
+/* Garder les boutons fixes à droite */
+.list-group-item button {
+  margin-left: 10px; /* Espacement entre les boutons */
+}
+
+/* Optionnel: Ajouter des styles pour les boutons */
+.list-group-item button.btn {
+  position: relative;
+  z-index: 1; /* S'assurer que les boutons sont au-dessus du titre */
 }
 
 .list-group.dragging-over {

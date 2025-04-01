@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page d'Accueil</title>
-</head>
 <body>
     <header class="bg-dark text-white text-center py-5">
         <h1>Bienvenue sur notre site !</h1>
@@ -33,4 +26,3 @@
         <p>&copy; 2023 Votre Entreprise. Tous droits réservés.</p>
     </footer>
 </body>
-</html>
