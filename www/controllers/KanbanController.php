@@ -17,7 +17,7 @@ class KanbanController
     public function index()
     {
         AuthMiddleware::checkAdmin();
-        $pageTitle = "Tableau Kanban"; 
+        $pageTitle = "Tableau Kanban";
         $tasks = $this->taskModel->getAllTasks();
         require_once 'views/layout.view.php';
         require_once 'views/kanban/kanban.view.php';

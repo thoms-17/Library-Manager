@@ -30,14 +30,10 @@ class Task
 
     public function updateTask($id, $status, $updated_at, $title = null, $description = null)
     {
-        // Commencer la requête de base
         $sql = "UPDATE tasks SET ";
-
-        // Créer un tableau pour stocker les parties de la requête dynamique
         $updates = [];
         $params = [];
 
-        // Ajouter les parties à mettre à jour si elles sont définies
         if (!is_null($title)) {
             $updates[] = "title = :title";
             $params[':title'] = $title;
@@ -48,22 +44,18 @@ class Task
             $params[':description'] = $description;
         }
 
-        // Le statut et la date de mise à jour sont toujours requis
         $updates[] = "status = :status";
         $params[':status'] = $status;
 
         $updates[] = "updated_at = :updated_at";
         $params[':updated_at'] = $updated_at;
 
-        // Convertir le tableau en chaîne de caractères SQL
         $sql .= implode(", ", $updates);
         $sql .= " WHERE id = :id";
 
-        // Préparation de la requête
         $stmt = self::$pdo->prepare($sql);
         $params[':id'] = $id;
 
-        // Exécution de la requête
         return $stmt->execute($params);
     }
 

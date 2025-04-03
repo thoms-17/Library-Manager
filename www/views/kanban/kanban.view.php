@@ -138,7 +138,7 @@
                                     <option value="done" <?= $task['status'] === 'done' ? 'selected' : '' ?>>Terminé</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-pen"></i></button>
+                            <button type="submit" class="btn btn-primary">Valider</button>
                         </form>
                     </div>
                 </div>

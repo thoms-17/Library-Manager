@@ -24,13 +24,13 @@
 
 .list-group-item {
   display: flex;
-  justify-content: space-between;  /* Espace entre le titre et les boutons */
-  align-items: flex-start;  /* Aligner les éléments en haut (au lieu de centrer) */
-  cursor: move;  /* Indique que l'élément est déplaçable */
+  justify-content: space-between; /* Espace entre le titre et les boutons */
+  align-items: flex-start; /* Aligner les éléments en haut (au lieu de centrer) */
+  cursor: move; /* Indique que l'élément est déplaçable */
   transition: background-color 0.3s;
   padding-right: 50px; /* Laisser de l'espace à droite pour les boutons */
   padding-bottom: 10px; /* Espacement entre le titre et les boutons */
-  flex-wrap: wrap;  /* Permet d'ajuster le titre sur plusieurs lignes si nécessaire */
+  flex-wrap: wrap; /* Permet d'ajuster le titre sur plusieurs lignes si nécessaire */
 }
 
 .list-group-item:hover {
@@ -39,7 +39,7 @@
 
 /* Style pour le titre, s'adapte à la largeur disponible */
 .list-group-item span.task-title {
-  flex-grow: 1;  /* Le titre occupe tout l'espace disponible */
+  flex-grow: 1; /* Le titre occupe tout l'espace disponible */
   overflow: hidden; /* Cache le texte qui déborde */
   white-space: normal; /* Permet au texte de se couper en plusieurs lignes */
   margin-right: 10px; /* Espacement entre le titre et le bouton */
@@ -59,4 +59,19 @@
 .list-group.dragging-over {
   background-color: #e2e2e2;
   border: 2px dashed #999; /* Feedback visuel quand on peut drop */
+}
+
+.dragging {
+  opacity: 0.5;
+}
+
+.dragging-over {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.drop-indicator {
+  height: 5px;
+  background-color: #007bff;
+  margin: 4px 0;
+  border-radius: 2px;
 }
