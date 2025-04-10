@@ -34,7 +34,11 @@
                     <div id="infoDisplay">
                         <p class="card-text"><strong>Nom d'utilisateur :</strong> <span id="usernameDisplay"><?= htmlspecialchars($userData['username']) ?></span></p>
                         <p class="card-text"><strong>Email :</strong> <?= htmlspecialchars($userData['email']) ?></p>
-                        <p class="card-text"><strong>Date d'inscription :</strong> <?= htmlspecialchars($userData['creation_date']) ?></p>
+                        <?php
+                        $date = new DateTime($userData['creation_date']);
+                        $formattedDate = $date->format('d/m/Y');
+                        ?>
+                        <p class="card-text"><strong>Date d'inscription :</strong> <?= htmlspecialchars($formattedDate) ?></p>
                         <button id="editModeBtn" class="btn btn-secondary">Modifier mon profil</button>
                     </div>
 
