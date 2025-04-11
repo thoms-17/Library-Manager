@@ -44,7 +44,11 @@ class DeleteAccountController
     {
         RequestMethodMiddleware::ensureMethod('POST');
 
-        require_once 'views/layout.view.php';
+        $pageTitle = "Compte supprimé";
+
+        ob_start();
         require_once 'views/user/delete_account_success.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 }

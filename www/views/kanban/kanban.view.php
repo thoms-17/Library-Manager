@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="../public/styles/kanban.css">
-
 <div class="container mt-5">
     <h1>Tableau Kanban</h1>
 
@@ -147,5 +145,3 @@
     <?php endforeach; ?>
 
 </div>
-
-<script src="../public/js/kanban.js"></script>

@@ -19,8 +19,14 @@ class KanbanController
         AuthMiddleware::checkAdmin();
         $pageTitle = "Tableau Kanban";
         $tasks = $this->taskModel->getAllTasks();
-        require_once 'views/layout.view.php';
+
+        $pageStyles = '<link rel="stylesheet" href="../public/styles/kanban.css">';
+        $pageScripts = '<script src="../public/js/kanban.js"></script>';
+
+        ob_start();
         require_once 'views/kanban/kanban.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 
     public function addTask()

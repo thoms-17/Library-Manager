@@ -31,10 +31,15 @@ class AccountController
         }
 
         $pageTitle = "Mon compte";
+        $pageStyles = '<link rel="stylesheet" href="../public/styles/user_account.css">
+                       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">';
+        $pageScripts = '<script src="../../public/js/updateProfile.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>';
 
-        // Inclure les vues en passant les données utilisateur
-        require_once 'views/layout.view.php';
+        ob_start();
         require_once 'views/user/user_account.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 
     public function updateUserInfo()

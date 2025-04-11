@@ -21,9 +21,12 @@ class LoginController
         }
 
         $pageTitle = "Connexion";
+        $pageScripts = '<script src="../public/js/passwordToggle.js"></script>';
 
-        require_once 'views/layout.view.php';
+        ob_start();
         require_once 'views/user/login.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 
     public function login()

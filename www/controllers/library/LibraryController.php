@@ -17,8 +17,10 @@ class LibraryController
 
         $pageTitle = "Biliothèque"; 
 
-        require_once 'views/layout.view.php';
+        ob_start();
         require_once 'views/library/index.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 
     public function showAddForm()
@@ -28,8 +30,10 @@ class LibraryController
 
         $pageTitle = "Ajouter un livre"; 
 
-        require_once 'views/layout.view.php';
+        ob_start();
         require_once 'views/library/add_book.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 
     public function addBook()
@@ -66,8 +70,10 @@ class LibraryController
 
         $pageTitle = "Livre : " . $book['title']; 
 
+        ob_start();
+        require_once 'views/library/book_details.view.php';
+        $content = ob_get_clean();
         require_once 'views/layout.view.php';
-        require_once 'views/library/books_details.view.php';
     }
 
     public function showReviewForm($bookId)
@@ -77,8 +83,10 @@ class LibraryController
 
         $pageTitle = "Ajouter un avis le livre n° " . $bookId; 
 
-        require_once 'views/layout.view.php';
+        ob_start();
         require_once 'views/library/add_review.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 
     public function addReview($bookId)

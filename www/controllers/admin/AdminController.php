@@ -12,10 +12,13 @@ class AdminController
     {
         AuthMiddleware::checkAdmin();
 
-        $pageTitle = "Mon dashboard"; 
+        $pageTitle = "Mon dashboard";
+        $pageStyles = '<link rel="stylesheet" href="../public/styles/admin_dashboard.css">';
 
-        require_once 'views/layout.view.php';
+        ob_start();
         require_once 'views/admin/admin_dashboard.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 
     public function logs()
@@ -24,8 +27,16 @@ class AdminController
 
         $logs = new Log();
         $logsData = $logs->getLogs();
-        require_once 'views/layout.view.php';
+
+        $pageTitle = "Logs de connexion";
+        $pageStyles = '<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">';
+        $pageScripts = '<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+                        <script src="../../public/js/admin_logs.js"></script>';
+
+        ob_start();
         require_once 'views/admin/admin_logs.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 
     public function listUsers()
@@ -34,7 +45,15 @@ class AdminController
 
         $users = new User();
         $usersData = $users->getAllUsers();
-        require_once 'views/layout.view.php';
+
+        $pageTitle = "Liste des utilisateurs";
+        $pageStyles = '<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">';
+        $pageScripts = '<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+                        <script src="../../public/js/admin_logs.js"></script>';
+
+        ob_start();
         require_once 'views/admin/admin_users.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 }

@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    
+
     <?php if ($book): ?>
         <h1 class="mb-4"><?= htmlspecialchars($book['title']) ?></h1>
         <p><strong>Auteur :</strong> <?= htmlspecialchars($book['author']) ?></p>
@@ -11,8 +11,9 @@
             <ul class="list-group">
                 <?php foreach ($reviews as $review) : ?>
                     <li class="list-group-item">
-                        <p><?= htmlspecialchars($review['content']) ?> 
-                        <span class="badge badge-primary">Note : <?= htmlspecialchars($review['rating']) ?>/5</span></p>
+                        <p><?= htmlspecialchars($review['content']) ?>
+                            <span class="badge badge-primary">Note : <?= htmlspecialchars($review['rating']) ?>/5</span>
+                        </p>
                         <p><small>Posté par utilisateur #<?= htmlspecialchars($review['user_id']) ?></small></p>
                     </li>
                 <?php endforeach; ?>

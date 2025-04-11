@@ -21,10 +21,12 @@ class RegisterController
         }
 
         $pageTitle = "Inscription";
+        $pageScripts = '<script src="../public/js/passwordToggle.js"></script>';
 
-        // Afficher la vue register.view.php avec le formulaire d'inscription
-        require_once 'views/layout.view.php';
+        ob_start();
         require_once 'views/user/register.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 
     public function register()
