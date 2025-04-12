@@ -22,6 +22,11 @@
   border-bottom: 2px solid #ddd; /* Ajoute une séparation entre le titre et la liste */
 }
 
+.list-group {
+  min-height: 100px; /* ou ce que tu veux */
+  padding: 10px;
+}
+
 .list-group-item {
   display: flex;
   justify-content: space-between; /* Espace entre le titre et les boutons */
@@ -74,4 +79,23 @@
   background-color: #007bff;
   margin: 4px 0;
   border-radius: 2px;
+}
+
+/* S'assure que la colonne prend tout l'espace et reste droppable même vide */
+.kanban-column .list-group {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Bonus UX : indication visuelle si vide */
+.kanban-column .list-group:empty::before {
+  content: "Glissez une tâche ici";
+  color: #aaa;
+  font-style: italic;
+  text-align: center;
+  padding: 10px;
+  display: block;
 }

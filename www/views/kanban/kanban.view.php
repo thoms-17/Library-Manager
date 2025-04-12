@@ -32,7 +32,7 @@
 
     <div class="row mt-4">
         <!-- Colonne À faire -->
-        <div class="col kanban-column">
+        <div class="col kanban-column d-flex flex-column">
             <h2>À faire</h2>
             <ul class="list-group" id="todo">
                 <?php foreach ($tasks as $task) : ?>
@@ -56,7 +56,7 @@
         </div>
 
         <!-- Colonne En cours -->
-        <div class="col kanban-column">
+        <div class="col kanban-column d-flex flex-column">
             <h2>En cours</h2>
             <ul class="list-group" id="in-progress">
                 <?php foreach ($tasks as $task) : ?>
@@ -81,7 +81,7 @@
         </div>
 
         <!-- Colonne Terminé -->
-        <div class="col kanban-column">
+        <div class="col kanban-column d-flex flex-column">
             <h2>Terminé</h2>
             <ul class="list-group" id="done">
                 <?php foreach ($tasks as $task) : ?>
