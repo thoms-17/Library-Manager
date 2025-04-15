@@ -15,4 +15,9 @@ body {
 /* Fait en sorte que le contenu prenne tout l’espace dispo */
 main {
     flex: 1;
+    padding-bottom: 20px;
+}
+
+footer {
+    margin-top: 10px;
 }

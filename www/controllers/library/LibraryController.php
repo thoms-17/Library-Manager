@@ -79,7 +79,6 @@ class LibraryController
     public function showReviewForm($bookId)
     {
         AuthMiddleware::checkAuth();
-        AuthMiddleware::checkAdmin();
 
         $pageTitle = "Ajouter un avis le livre n° " . $bookId;
 

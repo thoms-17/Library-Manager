@@ -3,7 +3,11 @@
     <?php if ($book): ?>
         <h1 class="mb-4"><?= htmlspecialchars($book['title']) ?></h1>
         <p><strong>Auteur :</strong> <?= htmlspecialchars($book['author']) ?></p>
-        <p><strong>Date de publication :</strong> <?= htmlspecialchars($book['publication_date']) ?></p>
+        <?php
+        $date = new DateTime($book['publication_date']);
+        $formattedDate = $date->format('d/m/Y');
+        ?>
+        <p><strong>Date de publication :</strong> <?= htmlspecialchars($formattedDate) ?></p>
         <p><strong>Description :</strong> <?= nl2br(htmlspecialchars($book['description'])) ?></p>
 
         <h2 class="mt-5">Avis</h2>
