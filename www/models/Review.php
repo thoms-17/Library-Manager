@@ -23,6 +23,13 @@ class Review
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getReviewById($reviewId)
+    {
+        $stmt = self::$pdo->prepare("SELECT * FROM reviews WHERE id = :id");
+        $stmt->execute(['id' => $reviewId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function addReview($bookId, $userId, $content, $rating)
     {
         $stmt = self::$pdo->prepare("INSERT INTO reviews (book_id, user_id, content, rating) VALUES (:book_id, :user_id, :content, :rating)");
@@ -33,6 +40,10 @@ class Review
             'rating' => $rating,
         ]);
     }
-}
 
-?>
+    public function deleteReview($reviewId)
+    {
+        $stmt = self::$pdo->prepare("DELETE FROM reviews WHERE id = :id");
+        return $stmt->execute(['id' => $reviewId]);
+    }
+}

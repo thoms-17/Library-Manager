@@ -21,6 +21,7 @@ $routes = [
     '/library/book/{id}' => ['controller' => 'Library\\LibraryController', 'action' => 'viewBook', 'method' => 'GET'],
     '/library/book/{id}/add-review-form' => ['controller' => 'Library\\LibraryController', 'action' => 'showReviewForm', 'method' => 'GET'],
     '/library/book/{id}/add-review' => ['controller' => 'Library\\LibraryController', 'action' => 'addReview', 'method' => 'POST'],
+    '/library/delete-review/{id}' => ['controller' => 'Library\\LibraryController', 'action' => 'deleteReview', 'method' => 'POST'],
     '/library/delete/{id}' => ['controller' => 'Library\\LibraryController', 'action' => 'deleteBook', 'method' => 'POST'],
     '/kanban' => ['controller' => 'KanbanController', 'action' => 'index', 'method' => 'GET'],
     '/kanban/add-task' => ['controller' => 'KanbanController', 'action' => 'addTask', 'method' => 'POST'],

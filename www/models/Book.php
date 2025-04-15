@@ -45,4 +45,10 @@ class Book
         $stmt = self::$pdo->prepare("DELETE FROM books WHERE id = :id");
         return $stmt->execute(['id' => $bookId]);
     }
+
+    public function getAllBooksSortedByTitle()
+    {
+        $stmt = self::$pdo->query("SELECT * FROM books ORDER BY title ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

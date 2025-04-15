@@ -15,6 +15,16 @@
                             <span class="badge badge-primary">Note : <?= htmlspecialchars($review['rating']) ?>/5</span>
                         </p>
                         <p><small>Posté par utilisateur #<?= htmlspecialchars($review['user_id']) ?></small></p>
+                        <?php if (
+                            isset($_SESSION['user_id']) &&
+                            ($_SESSION['user_id'] == $review['user_id'] || $_SESSION['role'] === 'admin')
+                        ): ?>
+                            <form action="/library/delete-review/<?= $review['id'] ?>" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-trash"></i> Supprimer l'avis
+                                </button>
+                            </form>
+                        <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
             </ul>

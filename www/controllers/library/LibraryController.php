@@ -15,7 +15,7 @@ class LibraryController
         $bookModel = new Book();
         $books = $bookModel->getAllBooks();
 
-        $pageTitle = "Biliothèque"; 
+        $pageTitle = "Biliothèque";
 
         ob_start();
         require_once 'views/library/index.view.php';
@@ -28,7 +28,7 @@ class LibraryController
         AuthMiddleware::checkAuth();
         AuthMiddleware::checkAdmin();
 
-        $pageTitle = "Ajouter un livre"; 
+        $pageTitle = "Ajouter un livre";
 
         ob_start();
         require_once 'views/library/add_book.view.php';
@@ -68,10 +68,10 @@ class LibraryController
         $reviewModel = new Review();
         $reviews = $reviewModel->getReviewsByBookId($bookId);
 
-        $pageTitle = "Livre : " . $book['title']; 
+        $pageTitle = "Livre : " . $book['title'];
 
         ob_start();
-        require_once 'views/library/book_details.view.php';
+        require_once 'views/library/books_details.view.php';
         $content = ob_get_clean();
         require_once 'views/layout.view.php';
     }
@@ -81,7 +81,7 @@ class LibraryController
         AuthMiddleware::checkAuth();
         AuthMiddleware::checkAdmin();
 
-        $pageTitle = "Ajouter un avis le livre n° " . $bookId; 
+        $pageTitle = "Ajouter un avis le livre n° " . $bookId;
 
         ob_start();
         require_once 'views/library/add_review.view.php';
@@ -98,6 +98,38 @@ class LibraryController
         $reviewModel->addReview($bookId, $_SESSION['user_id'], $_POST['content'], $_POST['rating']);
 
         header('Location: /library/book/' . $bookId);
+        exit;
+    }
+
+    public function deleteReview($reviewId)
+    {
+        AuthMiddleware::checkAuth();
+        RequestMethodMiddleware::ensureMethod('POST');
+
+        $reviewModel = new Review();
+        $review = $reviewModel->getReviewById($reviewId);
+
+        if (!$review) {
+            http_response_code(404);
+            echo "Avis introuvable.";
+            exit;
+        }
+
+        $currentUserId = $_SESSION['user_id'];
+        $currentUserRole = $_SESSION['role'] ?? 'user'; // au cas où
+
+        $isAuthor = $review['user_id'] == $currentUserId;
+        $isAdmin = $currentUserRole === 'admin';
+
+        if (!$isAuthor && !$isAdmin) {
+            http_response_code(403);
+            echo "Vous n'avez pas l'autorisation de supprimer cet avis.";
+            exit;
+        }
+
+        $reviewModel->deleteReview($reviewId);
+
+        header('Location: /library/book/' . $review['book_id']);
         exit;
     }
 

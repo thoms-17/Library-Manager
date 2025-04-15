@@ -1,0 +1,18 @@
+/* Étire le html et le body pour qu'ils prennent toute la hauteur de l'écran */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Structure verticale de la page */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Fait en sorte que le contenu prenne tout l’espace dispo */
+main {
+    flex: 1;
+}

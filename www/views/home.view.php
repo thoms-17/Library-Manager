@@ -1,26 +1,30 @@
 <header class="bg-dark text-white text-center py-5">
-    <h1>Bienvenue sur notre site !</h1>
+    <h1>Bienvenue sur notre bibliothèque !</h1>
 </header>
 
 <main class="container my-5">
-    <section class="mb-4">
-        <h2 class="text-center">À propos de nous</h2>
-        <p class="text-center">Nous sommes une entreprise dédiée à fournir les meilleurs produits et services à nos clients. Avec des années d'expérience, nous nous engageons à satisfaire vos besoins.</p>
-    </section>
-
-    <section class="mb-4">
-        <h2 class="text-center">Nos Produits</h2>
-        <p class="text-center">Découvrez notre vaste gamme de produits de haute qualité, allant des gadgets électroniques aux articles de mode en passant par les produits ménagers.</p>
-        <a href="/produits" class="btn btn-primary d-block mx-auto">Voir nos produits</a>
-    </section>
-
-    <section>
-        <h2 class="text-center">Contactez-nous</h2>
-        <p class="text-center">N'hésitez pas à nous contacter pour toute question ou préoccupation. Notre équipe est là pour vous aider.</p>
-        <a href="/contact" class="btn btn-primary d-block mx-auto">Contactez-nous</a>
+    <section class="mb-5">
+        <h2 class="text-center mb-4">Livres disponibles</h2>
+        <?php if (!empty($books)) : ?>
+            <div class="row">
+                <?php foreach ($books as $book) : ?>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <a href="/library/book/<?= $book['id'] ?>" style="text-decoration: none; color: inherit;">
+                            <div class="card h-100 shadow-sm hover-shadow transition">
+                                <div class="card-body text-center">
+                                    <i class="fa-solid fa-book fa-2x mb-3 text-primary"></i>
+                                    <h5 class="card-title"><?= htmlspecialchars($book['title']) ?></h5>
+                                    <?php if (!empty($book['author'])) : ?>
+                                        <p class="card-text text-muted small">par <?= htmlspecialchars($book['author']) ?></p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else : ?>
+            <p class="text-center">Aucun livre disponible pour le moment.</p>
+        <?php endif; ?>
     </section>
 </main>
-
-<footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2023 Votre Entreprise. Tous droits réservés.</p>
-</footer>
