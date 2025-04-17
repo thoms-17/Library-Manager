@@ -28,6 +28,9 @@
                     ?>
                     <p class="card-text"><strong>Date d'inscription :</strong> <?= htmlspecialchars($formattedDate) ?></p>
                     <button id="editModeBtn" class="btn btn-secondary">Modifier mon profil</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">
+                        Supprimer mon compte
+                    </button>
                 </div>
 
                 <!-- Formulaire de modification -->
@@ -61,3 +64,10 @@
         </div>
     </div>
 </div>
+
+<!-- Modal de confirmation de suppression -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+

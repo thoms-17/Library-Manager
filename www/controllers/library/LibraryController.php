@@ -80,7 +80,8 @@ class LibraryController
     {
         AuthMiddleware::checkAuth();
 
-        $pageTitle = "Ajouter un avis le livre n° " . $bookId;
+        $pageTitle = "Ajouter un avis : livre n° " . $bookId;
+        $pageScripts = '<script src="../../../public/js/reviewStar.js"></script>';
 
         ob_start();
         require_once 'views/library/add_review.view.php';

@@ -6,16 +6,33 @@
             <label for="content">Votre avis :</label>
             <textarea name="content" class="form-control" rows="5" required></textarea>
         </div>
+
         <div class="form-group">
-            <label for="rating">Note (1 à 5) :</label>
-            <input type="number" name="rating" class="form-control" min="1" max="5" required>
+            <label for="rating">Note :</label>
+            <div id="star-rating" class="mb-2">
+                <i class="far fa-star star" data-value="1"></i>
+                <i class="far fa-star star" data-value="2"></i>
+                <i class="far fa-star star" data-value="3"></i>
+                <i class="far fa-star star" data-value="4"></i>
+                <i class="far fa-star star" data-value="5"></i>
+            </div>
+
+            <input type="hidden" name="rating" id="rating" required>
         </div>
+
         <button type="submit" class="btn btn-success">Poster l'avis</button>
     </form>
 </div>
 
-<script>
-    document.querySelector("form").addEventListener("submit", function(event) {
-        console.log("Le formulaire a été soumis !");
-    });
-</script>
+<style>
+    #star-rating .star {
+        font-size: 2rem;
+        color: #ccc;
+        cursor: pointer;
+    }
+
+    #star-rating .star.hover,
+    #star-rating .star.selected {
+        color: gold;
+    }
+</style>

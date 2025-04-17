@@ -15,9 +15,23 @@
             <ul class="list-group">
                 <?php foreach ($reviews as $review) : ?>
                     <li class="list-group-item">
-                        <p><?= htmlspecialchars($review['content']) ?>
-                            <span class="badge badge-primary">Note : <?= htmlspecialchars($review['rating']) ?>/5</span>
+                        <p>
+                            <?= htmlspecialchars($review['content']) ?>
+                            <br>
+                            <span class="text-warning">
+                                <?php
+                                $rating = (int) $review['rating'];
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $rating) {
+                                        echo '<i class="fas fa-star"></i>'; // étoile pleine
+                                    } else {
+                                        echo '<i class="far fa-star"></i>'; // étoile vide
+                                    }
+                                }
+                                ?>
+                            </span>
                         </p>
+
                         <p><small>Posté par utilisateur #<?= htmlspecialchars($review['user_id']) ?></small></p>
                         <?php if (
                             isset($_SESSION['user_id']) &&
