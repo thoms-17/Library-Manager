@@ -68,6 +68,7 @@ class LoginController
         // Stocker uniquement l'ID utilisateur en session
         $_SESSION['user_id'] = $userData['id'];
         $_SESSION['role'] = $userData['role'];
+        $_SESSION['username'] = $userData['username'];
 
         // Rediriger l'utilisateur vers la page d'accueil
         header('Location: /home');

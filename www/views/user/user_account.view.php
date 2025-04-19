@@ -67,7 +67,27 @@
 
 <!-- Modal de confirmation de suppression -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <span aria-hidden="true">&times;</span>
-    </button>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation de Suppression</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/delete-account" method="POST">
+                <div class="modal-body">
+                    <p>Veuillez saisir votre mot de passe pour confirmer la suppression de votre compte.</p>
+                    <input type="password" class="form-control mb-3" name="confirmPassword" id="confirmPassword" placeholder="Mot de passe">
+                    <?php if (isset($delete_error_message)) : ?>
+                        <p class="alert alert-danger"><?= $delete_error_message ?></p>
+                    <?php endif; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Confirmer la suppression du compte</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-
