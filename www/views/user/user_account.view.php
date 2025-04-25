@@ -28,7 +28,7 @@
                     ?>
                     <p class="card-text"><strong>Date d'inscription :</strong> <?= htmlspecialchars($formattedDate) ?></p>
                     <button id="editModeBtn" class="btn btn-secondary">Modifier mon profil</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">
+                    <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#confirmDeleteModal">
                         Supprimer mon compte
                     </button>
                 </div>

@@ -16,6 +16,8 @@ class User
     private $creation_date;
     private $role;
     private static $pdo;
+    private $email_verified = 0;
+    private $verification_token;
 
     public function __construct()
     {
@@ -50,6 +52,16 @@ class User
         $this->role = $role;
     }
 
+    public function setVerificationToken($token)
+    {
+        $this->verification_token = $token;
+    }
+
+    public function setEmailVerified($value)
+    {
+        $this->email_verified = $value;
+    }
+
     public function save()
     {
         // Vérifier que l'utilisateur n'existe pas déjà dans la base de données
@@ -58,7 +70,7 @@ class User
         }
 
         // Préparation de la requête SQL avec des paramètres nommés
-        $query = "INSERT INTO users (username, email, password, creation_date) VALUES (:username, :email, :password, :creation_date)";
+        $query = "INSERT INTO users (username, email, password, creation_date, email_verified, verification_token) VALUES (:username, :email, :password, :creation_date, :email_verified, :verification_token)";
         $statement = self::$pdo->prepare($query);
 
         // Liaison des valeurs avec les paramètres
@@ -66,6 +78,8 @@ class User
         $statement->bindValue(':email', $this->email);
         $statement->bindValue(':password', $this->password);
         $statement->bindValue(':creation_date', $this->creation_date);
+        $statement->bindValue(':email_verified', $this->email_verified);
+        $statement->bindValue(':verification_token', $this->verification_token);
 
         // Exécution de la requête préparée
         if (!$statement->execute()) {
@@ -190,5 +204,20 @@ class User
         $statement->bindValue(':user_id', $userId, PDO::PARAM_INT);
 
         return $statement->execute();
+    }
+
+    public function getUserByVerificationToken($token)
+    {
+        $sql = "SELECT * FROM users WHERE verification_token = :token";
+        $stmt = self::$pdo->prepare($sql);
+        $stmt->execute(['token' => $token]);
+        return $stmt->fetch();
+    }
+
+    public function markEmailAsVerified($userId)
+    {
+        $sql = "UPDATE users SET email_verified = 1, verification_token = NULL WHERE id = :id";
+        $stmt = self::$pdo->prepare($sql);
+        $stmt->execute(['id' => $userId]);
     }
 }

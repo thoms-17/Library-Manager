@@ -65,6 +65,13 @@ class LoginController
             exit;
         }
 
+        // Vérifier si l'email a été vérifié
+        if (!$userData['email_verified']) {
+            $_SESSION['login_error'] = "Veuillez vérifier votre adresse email avant de vous connecter.";
+            header('Location: /login');
+            exit;
+        }
+
         // Stocker uniquement l'ID utilisateur en session
         $_SESSION['user_id'] = $userData['id'];
         $_SESSION['role'] = $userData['role'];

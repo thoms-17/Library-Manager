@@ -27,6 +27,7 @@ $routes = [
     '/kanban/add-task' => ['controller' => 'KanbanController', 'action' => 'addTask', 'method' => 'POST'],
     '/kanban/update-task/{id}' => ['controller' => 'KanbanController', 'action' => 'updateTask', 'method' => 'POST'],
     '/kanban/delete-task/{id}' => ['controller' => 'KanbanController', 'action' => 'deleteTask', 'method' => 'POST'],
+    '/verify-email' => ['controller' => 'User\RegisterController', 'action' => 'verifyEmail', 'method' => 'GET'],
 ];
 
 function route($action)

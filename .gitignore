@@ -16,3 +16,6 @@ db/
 *.sqlite
 *.sock
 *.pid
+
+# Ignorer le dossier des dépendances Composer
+/www/vendor/

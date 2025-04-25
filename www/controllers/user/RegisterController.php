@@ -5,6 +5,8 @@ namespace App\Controllers\User;
 use App\Models\User;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RequestMethodMiddleware;
+use App\Utils\EmailHelper;
+use App\Controllers\ErrorController;
 
 class RegisterController
 {
@@ -54,19 +56,26 @@ class RegisterController
         elseif ($user->userExists($username, $email)) {
             $errorMessage = "Ce nom d'utilisateur ou cette adresse e-mail est déjà utilisée.";
         } else {
+
+            $token = bin2hex(random_bytes(32));
             // Si tout est valide, créer un nouvel utilisateur
             $user->setUsername($username);
             $user->setEmail($email);
             $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
             $user->setCreationDate($creation_date);
             $user->setRole('user');
+            $user->setVerificationToken($token);
+            $user->setEmailVerified(0);
 
             try {
+                EmailHelper::sendVerificationEmail($email, $username, $token);
                 $user->save();
+
+                $_SESSION['register_success'] = "Inscription réussie ! Un e-mail de vérification a été envoyé à votre adresse.";
                 header('Location: /login'); // Rediriger vers la page de connexion après succès
                 exit;
             } catch (\Exception $e) {
-                $errorMessage = "Une erreur s'est produite lors de l'enregistrement de l'utilisateur.";
+                $errorMessage = "Une erreur s'est produite lors de l'enregistrement de l'utilisateur. (" . $e->getMessage() . ")";
             }
         }
 
@@ -80,5 +89,27 @@ class RegisterController
     {
         // Vérification stricte : Au moins 8 caractères, une majuscule, un chiffre, et un caractère spécial (généralisation des caractères spéciaux)
         return preg_match('/^(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_])(?=.{8,})/', $password);
+    }
+
+    public function verifyEmail()
+    {
+        $token = $_GET['token'] ?? null;
+
+        if (!$token) {
+            ErrorController::notFound();
+        }
+
+        $userModel = new User();
+        $user = $userModel->getUserByVerificationToken($token);
+
+        if (!$user) {
+            echo "Ce lien de vérification est invalide ou a déjà été utilisé.";
+            return;
+        }
+
+        // Mettre à jour l'utilisateur : verified = 1, token = NULL
+        $userModel->markEmailAsVerified($user['id']);
+
+        echo "Votre adresse email a bien été vérifiée ! Vous pouvez maintenant vous connecter.";
     }
 }

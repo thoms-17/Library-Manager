@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class ErrorController
 {
-    public function notFound()
+    static function notFound()
     {
         // Spécifie le code de réponse 404
         http_response_code(404);
