@@ -14,10 +14,16 @@ class LoginController
         AuthMiddleware::redirectIfAuthenticated();
 
         $errorMessage = null;
+        $successMessage = null;
 
         if (isset($_SESSION['login_error'])) {
             $errorMessage = $_SESSION['login_error'];
             unset($_SESSION['login_error']); // Effacer le message d'erreur de la session après l'avoir affiché
+        }
+        
+        if (isset($_SESSION['register_success'])) {
+            $successMessage = $_SESSION['register_success'];
+            unset($_SESSION['register_success']); // Effacez le message de succès de la session après l'avoir affiché
         }
 
         $pageTitle = "Connexion";

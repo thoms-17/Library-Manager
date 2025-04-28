@@ -23,7 +23,10 @@
             </div>
             <?php if (isset($errorMessage)) : ?>
                 <p class="alert alert-danger"><?= $errorMessage ?></p>
+            <?php elseif (isset($successMessage)) : ?>
+                <p class="alert alert-success"><?= $successMessage ?></p>
             <?php endif; ?>
+
         </form>
     </div>
 </div>

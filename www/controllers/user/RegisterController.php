@@ -21,7 +21,7 @@ class RegisterController
             $errorMessage = $_SESSION['register_error'];
             unset($_SESSION['register_error']); // Effacez le message d'erreur de la session après l'avoir affiché
         }
-
+    
         $pageTitle = "Inscription";
         $pageScripts = '<script src="../public/js/passwordToggle.js"></script>';
 
@@ -103,13 +103,22 @@ class RegisterController
         $user = $userModel->getUserByVerificationToken($token);
 
         if (!$user) {
-            echo "Ce lien de vérification est invalide ou a déjà été utilisé.";
-            return;
+            $pageTitle = "Lien de vérification invalide";
+
+            ob_start();
+            require_once 'views/user/invalid_link.view.php';
+            $content = ob_get_clean();
+            require_once 'views/layout.view.php';
         }
 
         // Mettre à jour l'utilisateur : verified = 1, token = NULL
         $userModel->markEmailAsVerified($user['id']);
 
-        echo "Votre adresse email a bien été vérifiée ! Vous pouvez maintenant vous connecter.";
+        $pageTitle = "Email vérifié avec succès";
+
+        ob_start();
+        require_once 'views/user/email_validation.view.php';
+        $content = ob_get_clean();
+        require_once 'views/layout.view.php';
     }
 }
