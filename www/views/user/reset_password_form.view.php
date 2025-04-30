@@ -12,6 +12,9 @@
             <div class="form-group mt-3 text-center">
                 <button type="submit" class="btn btn-primary">Réinitialiser</button>
             </div>
+            <?php if (isset($errorMessage)) : ?>
+                <p class="alert alert-danger"><?= $errorMessage ?></p>
+            <?php endif; ?>
         </form>
     </div>
 </div>

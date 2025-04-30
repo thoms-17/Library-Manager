@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RequestMethodMiddleware;
 use App\Utils\EmailHelper;
+use App\Utils\SecurePassword;
 use App\Controllers\ErrorController;
 
 class RegisterController
@@ -47,7 +48,7 @@ class RegisterController
         $user = new User();
         $errorMessage = '';
 
-        if (!$this->isPasswordSecure($password)) {
+        if (!SecurePassword::isPasswordSecure($password)) {
             $errorMessage = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.";
             $_SESSION['register_error'] = $errorMessage;
         }
@@ -83,12 +84,6 @@ class RegisterController
         $_SESSION['register_error'] = $errorMessage;
         header('Location: /register');
         exit;
-    }
-
-    private function isPasswordSecure($password)
-    {
-        // Vérification stricte : Au moins 8 caractères, une majuscule, un chiffre, et un caractère spécial (généralisation des caractères spéciaux)
-        return preg_match('/^(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_])(?=.{8,})/', $password);
     }
 
     public function verifyEmail()

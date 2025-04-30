@@ -7,6 +7,7 @@ use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RequestMethodMiddleware;
 use App\Utils\EmailHelper;
 use App\Controllers\ErrorController;
+use App\Utils\SecurePassword;
 
 class LoginController
 {
@@ -140,6 +141,16 @@ class LoginController
 
     public function resetPasswordForm()
     {
+        if (isset($_SESSION['wrong_password'])) {
+            $errorMessage = $_SESSION['wrong_password'];
+            unset($_SESSION['wrong_password']); // Effacez le message d'erreur de la session après l'avoir affiché
+        }
+
+        if (isset($_SESSION['reset_password_error'])) {
+            $errorMessage = $_SESSION['reset_password_error'];
+            unset($_SESSION['reset_password_error']); // Effacez le message d'erreur de la session après l'avoir affiché
+        }
+
         if (!isset($_GET['token'])) {
             http_response_code(400);
             echo "Lien invalide.";
@@ -171,27 +182,42 @@ class LoginController
         $token = $_POST['token'] ?? null;
         $newPassword = $_POST['password'] ?? null;
 
-        if (!$token || !$newPassword) {
-            http_response_code(400);
-            echo "Requête invalide.";
+        try {
+            // Vérification des données de base
+            if (!$token || !$newPassword) {
+                http_response_code(400);
+                echo "Requête invalide.";
+                exit;
+            }
+
+            // Vérification de la robustesse du mot de passe
+            if (!SecurePassword::isPasswordSecure($newPassword)) {
+                $errorMessage = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.";
+                $_SESSION['reset_password_error'] = $errorMessage;
+                header("Location: /reset-password?token=" . urlencode($token));
+                exit;
+            }
+
+            $userModel = new User();
+            $user = $userModel->getUserByResetToken($token);
+
+            if (!$user) {
+                http_response_code(400);
+                echo "Token invalide.";
+                exit;
+            }
+
+            // Mise à jour du mot de passe
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+            $userModel->updatePasswordAndClearToken($user['id'], $hashedPassword);
+
+            $_SESSION['successMessage'] = "Votre mot de passe a été réinitialisé.";
+            header('Location: /login');
+            exit;
+        } catch (\Exception $e) {
+            $_SESSION['reset_password_error'] = $e->getMessage();
+            header("Location: /reset-password?token=" . urlencode($token));
             exit;
         }
-
-        $userModel = new User();
-        $user = $userModel->getUserByResetToken($token);
-
-        if (!$user) {
-            http_response_code(400);
-            echo "Token invalide.";
-            exit;
-        }
-
-        // Mise à jour du mot de passe
-        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-        $userModel->updatePasswordAndClearToken($user['id'], $hashedPassword);
-
-        $_SESSION['successMessage'] = "Votre mot de passe a été réinitialisé.";
-        header('Location: /login');
-        exit;
     }
 }
