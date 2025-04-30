@@ -28,6 +28,10 @@ $routes = [
     '/kanban/update-task/{id}' => ['controller' => 'KanbanController', 'action' => 'updateTask', 'method' => 'POST'],
     '/kanban/delete-task/{id}' => ['controller' => 'KanbanController', 'action' => 'deleteTask', 'method' => 'POST'],
     '/verify-email' => ['controller' => 'User\RegisterController', 'action' => 'verifyEmail', 'method' => 'GET'],
+    '/forgot-password' => ['controller' => 'User\\LoginController', 'action' => 'forgotPasswordForm', 'method' => 'GET'],
+    '/forgot-password/submit' => ['controller' => 'User\\LoginController', 'action' => 'forgotPasswordSubmit', 'method' => 'POST'],
+    '/reset-password' => ['controller' => 'User\\LoginController', 'action' => 'resetPasswordForm', 'method' => 'GET'],
+    '/reset-password/submit' => ['controller' => 'User\\LoginController', 'action' => 'resetPasswordSubmit', 'method' => 'POST'],
 ];
 
 function route($action)

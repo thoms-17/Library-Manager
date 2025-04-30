@@ -220,4 +220,33 @@ class User
         $stmt = self::$pdo->prepare($sql);
         $stmt->execute(['id' => $userId]);
     }
+
+    public function getUserDataByEmail($email)
+    {
+        $stmt = self::$pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch();
+    }
+
+    public function storeResetToken($userId, $token)
+    {
+        $stmt = self::$pdo->prepare("UPDATE users SET reset_token = ? WHERE id = ?");
+        $stmt->execute([$token, $userId]);
+    }
+
+    public function getUserByResetToken($token)
+    {
+        $stmt = self::$pdo->prepare("SELECT * FROM users WHERE reset_token = :token");
+        $stmt->execute(['token' => $token]);
+        return $stmt->fetch();
+    }
+
+    public function updatePasswordAndClearToken($userId, $hashedPassword)
+    {
+        $stmt = self::$pdo->prepare("UPDATE users SET password = :password, reset_token = NULL WHERE id = :id");
+        $stmt->execute([
+            'password' => $hashedPassword,
+            'id' => $userId
+        ]);
+    }
 }

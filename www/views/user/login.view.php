@@ -17,6 +17,9 @@
                         </button>
                     </div>
                 </div>
+                <div class="text-left mt-2">
+                    <a href="/forgot-password" class="text-primary" style="text-decoration: underline;">Mot de passe oublié ?</a>
+                </div>
             </div>
             <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary">Se connecter</button>
