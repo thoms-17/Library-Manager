@@ -95,7 +95,7 @@ www/
 - Interface phpMyAdmin pour gestion de la BDD
 - Visualiser des livres publiés par l'administrateur
 - Ajout et suppression d'avis sur les livres
-- Modification du profil utilisateur et ajotu d'une photo de profil
+- Modification du profil utilisateur et ajout d'une photo de profil
 
 ---
 
