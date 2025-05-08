@@ -50,7 +50,9 @@ environment:
 
 #### 3. Lancer les conteneurs Docker
 
+```bash
 docker-compose up -d
+```
 
 Cela démarre les services suivants :
 
