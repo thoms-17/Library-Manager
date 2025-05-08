@@ -18,8 +18,8 @@
 
 #### 1. Cloner le projet
 
-git clone https://github.com/thoms-17/Library-Manager
-cd library-manager
+```bash git clone https://github.com/thoms-17/Library-Manager```
+```bash cd library-manager```
 
 #### 2. Créer le fichier `.env` dans le dossier `www/`
 
