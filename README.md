@@ -23,7 +23,6 @@ git clone https://github.com/thoms-17/Library-Manager
 cd Library-Manager
 ```
 
-
 #### 2. Créer le fichier `.env` dans le dossier `www/`
 
 Ce fichier est requis pour configurer l'accès à la base de données ainsi que l'envoi des emails.
@@ -32,6 +31,7 @@ Ce fichier est requis pour configurer l'accès à la base de données ainsi que 
 
 Exemple de structure :
 
+```bash
 DB_HOST=mysql  
 DB_NAME=nom_de_votre_base  
 DB_USER=nom_utilisateur  
@@ -39,6 +39,7 @@ DB_PASS=mot_de_passe
 
 EMAIL_SENDER=adresse_email_expediteur@gmail.com  
 EMAIL_PASSWORD=mot_de_passe_application_google
+```
 
 ℹ️ Pour que la connexion fonctionne correctement avec MySQL, assurez-vous que les valeurs de `DB_NAME`, `DB_USER`, et `DB_PASS` correspondent aux variables d’environnement définies dans la section `mysql:` de votre `docker-compose.yml` :
 
