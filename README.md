@@ -96,6 +96,32 @@ www/
 
 ---
 
+### 👤 Donner les droits d'administrateur
+
+Lors de la **première inscription**, l'utilisateur est enregistré avec un rôle par défaut "user". Si vous souhaitez accéder aux fonctionnalités réservées à un administrateur, vous pouvez **modifier manuellement le rôle dans la base de données** via **phpMyAdmin** :
+
+1. Rendez-vous sur [http://localhost:8080](http://localhost:8080)
+2. Connectez-vous avec les identifiants définis dans le `docker-compose.yml`
+3. Accédez à la table `users`
+4. Repérez la ligne correspondant à votre compte
+5. Modifiez la colonne `role` et remplacez sa valeur par `admin`
+6. Cliquez sur "Exécuter" pour valider la modification
+
+> 🔐 L’utilisateur possède maintenant les privilèges d’un administrateur.
+
+---
+
+### 🛡️ Fonctionnalités réservées à l’administrateur
+
+Une fois connecté en tant qu'administrateur, vous avez accès à des fonctionnalités supplémentaires :
+
+- 🧩 Accès au dashboard Admin
+- 🛠 Affichage des utilisateurs et des logs
+- 📚 Ajout et suppression de livres
+- 📊 Accès à un tableau kanban pour une gestion des tâches
+
+> ✏️ Ces fonctionnalités sont protégées par vérification du rôle `admin` côté serveur.
+
 ## 📨 Configuration des emails
 
 L’envoi d’e-mails utilise un compte Gmail configuré via le fichier `.env`.
