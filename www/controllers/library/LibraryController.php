@@ -7,6 +7,7 @@ use App\Models\Review;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RequestMethodMiddleware;
 use App\Controllers\ErrorController;
+use Error;
 
 class LibraryController
 {
@@ -110,8 +111,7 @@ class LibraryController
         $review = $reviewModel->getReviewById($reviewId);
 
         if (!$review) {
-            http_response_code(404);
-            echo "Avis introuvable.";
+            ErrorController::notFound();
             exit;
         }
 
@@ -122,8 +122,7 @@ class LibraryController
         $isAdmin = $currentUserRole === 'admin';
 
         if (!$isAuthor && !$isAdmin) {
-            http_response_code(403);
-            echo "Vous n'avez pas l'autorisation de supprimer cet avis.";
+            ErrorController::forbidden("Vous n'avez pas la permission de supprimer cet avis.");
             exit;
         }
 

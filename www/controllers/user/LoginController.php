@@ -8,6 +8,7 @@ use App\Middlewares\RequestMethodMiddleware;
 use App\Utils\EmailHelper;
 use App\Controllers\ErrorController;
 use App\Utils\SecurePassword;
+use Error;
 
 class LoginController
 {
@@ -152,8 +153,7 @@ class LoginController
         }
 
         if (!isset($_GET['token'])) {
-            http_response_code(400);
-            echo "Lien invalide.";
+            ErrorController::badRequest('Lien invalide.');
             exit;
         }
 
@@ -162,8 +162,7 @@ class LoginController
         $user = $userModel->getUserByResetToken($token);
 
         if (!$user) {
-            http_response_code(400);
-            echo "Lien invalide ou expiré.";
+            ErrorController::badRequest('Lien invalide ou expiré.');
             exit;
         }
 
@@ -185,8 +184,7 @@ class LoginController
         try {
             // Vérification des données de base
             if (!$token || !$newPassword) {
-                http_response_code(400);
-                echo "Requête invalide.";
+                ErrorController::badRequest('Lien invalide ou expiré.');
                 exit;
             }
 
@@ -202,8 +200,7 @@ class LoginController
             $user = $userModel->getUserByResetToken($token);
 
             if (!$user) {
-                http_response_code(400);
-                echo "Token invalide.";
+                ErrorController::badRequest();
                 exit;
             }
 

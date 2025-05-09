@@ -4,6 +4,7 @@ namespace App\Controllers\User;
 
 use App\Middlewares\AuthMiddleware;
 use App\Models\User;
+use App\Controllers\ErrorController;
 
 class AccountController
 {
@@ -61,8 +62,7 @@ class AccountController
             $_SESSION['username'] = $username;
             echo "Mise à jour réussie.";
         } else {
-            http_response_code(500);
-            echo "Erreur lors de la mise à jour.";
+            ErrorController::internalServerError("Erreur lors de la mise à jour des informations de l'utilisateur.");
         }
     }
 }

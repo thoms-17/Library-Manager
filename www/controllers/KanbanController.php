@@ -62,13 +62,12 @@ class KanbanController
                 if ($success) {
                     echo json_encode(['success' => true, 'message' => 'Tâche mise à jour']);
                 } else {
-                    http_response_code(500);  // Définit le code d'erreur si échec
+                    ErrorController::internalServerError();  // Définit le code d'erreur si échec
                     //echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour']);
                 }
             } else {
                 // Si les données JSON ne sont pas valides
-                http_response_code(400);  // Code pour mauvaise requête
-                //echo json_encode(['success' => false, 'message' => 'Données invalides']);
+                ErrorController::badRequest(); // Code pour mauvaise requête
             }
 
             // Terminer l'exécution pour éviter toute collision avec le code suivant
