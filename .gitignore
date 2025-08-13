@@ -19,3 +19,9 @@ db/
 
 # Ignorer le dossier des dépendances Composer
 /www/vendor/
+
+# Ignorer le dossier des dépendances Node.js
+node_modules/
+
+# Ignorer les fichiers macOS Finder
+.DS_Store
